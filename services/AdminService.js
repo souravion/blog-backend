@@ -1,5 +1,5 @@
 
-const {UserCreateSchema} = require('../models/admin/AdminSchema')
+const {UserCreateSchema} = require('../models/AdminSchema')
 const mongoose = require("mongoose")
 const userCreate = new mongoose.model('user',UserCreateSchema)
 

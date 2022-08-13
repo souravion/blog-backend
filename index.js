@@ -5,13 +5,14 @@ const db = require('./config/dbConnection');
 // const todoRouter = require('./routes/todoRouters')
 const {defaultErrorHandler, notFoundHandler} = require('./middleware/common/errorHandler')
 const adminRouter = require('./routes/adminRouters')
+// const userRoute = require('./routes/userRouters')
 const app = express();
 const port = process.env.PORT;
 db.databseConnection()
 app.use(express.json());
 // app.use(cors());
 
-// app.use(todoRouter)
+// app.use(userRoute)
 app.use('/admin',adminRouter)
 
 app.use(notFoundHandler);

@@ -3,7 +3,7 @@ const mongooes = require('mongoose')
 const UserCreateSchema = mongooes.Schema({
     id:{
         type:Number,
-        required:false
+        required:false,
     },
     name:{
         type:String,
@@ -32,6 +32,8 @@ const UserCreateSchema = mongooes.Schema({
         default:Date.now
     }
 });
+
+
 
 module.exports = {
     UserCreateSchema
