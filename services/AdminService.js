@@ -15,9 +15,9 @@ exports.UserCreate = async (req,res)=> {
 
 exports.Login = async(req,res)=>{
     try{
-        const user = await adminUser.find({email:req})
+        const user = await adminUser.findOne({email:req})
         return user;
-    }catch{
+    }catch {
         throw Error('Authentication failed')
     }
 

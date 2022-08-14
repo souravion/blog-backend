@@ -2,9 +2,9 @@ const mongoose = require("mongoose")
 const {UserCreateSchema} = require('../../models/AdminSchema')
 const adminService = require('../../services/AdminService')
 const bcrypt = require('bcrypt');
-
-
+const { generateTokens } = require("../../utils/generateTokens");
 const jwt = require('jsonwebtoken');
+
 
 exports.CreateAdminUser = async (req, res) => {
     try {
@@ -34,30 +34,35 @@ exports.CreateAdminUser = async (req, res) => {
 exports.LoginController = async (req, res) => {
     try {
         const user = await adminService.Login(req.body.email)
-            if(user && user.length>0){
-            const isValidPassword = await bcrypt.compare(req.body.password, user[0].passsword)
-                if(isValidPassword){
+        if(user && Object.keys(user).length > 0){
+            const isValidPassword = await bcrypt.compare(req.body.password, user.passsword)
+            if(isValidPassword){
                 // Generate token
-                const token = jwt.sign({
-                    name:user[0].name,
-                    userId: user[0]._id
-                }, process.env.JWT_SECRET,{
-                    expiresIn: '1h'
+               
+                const payload = {
+                    name:user.name,
+                    userId:user._id
+                }
+                const { accessToken } = await generateTokens(payload);
+                res.cookie(process.env.COOKIE_NAME,accessToken,{
+                    httpOnly: true,
+                    singed:true
                 })
                     res.status(200).json({
-                    "access_token":token,
                     "Message":"Login successfully"
-                    })
-                }else{
-                    res.status(401).json({
-                    "error":'Authentication failed'
-                    })
-                }
+                })
             }else{
                 res.status(401).json({
                     "error":'Authentication failed'
                 })
             }
+            
+        }else{
+            res.status(401).json({
+                "error":'Authentication failed'
+            })
+        }
+
     } catch (e) {
         return res.status(400).json({ 
             status: 400, 

@@ -2,22 +2,19 @@ require('dotenv').config({path: '.env'});
 
 const express = require('express');
 const db = require('./config/dbConnection');
-// const todoRouter = require('./routes/todoRouters')
 const {defaultErrorHandler, notFoundHandler} = require('./middleware/common/errorHandler')
 const adminRouter = require('./routes/adminRouters')
-// const userRoute = require('./routes/userRouters')
 const app = express();
-const port = process.env.PORT;
+var cookieParser = require('cookie-parser')
+
 db.databseConnection()
 app.use(express.json());
-// app.use(cors());
-
-// app.use(userRoute)
+app.use(cookieParser(process.env.COOKIE_SECRET))
 app.use('/admin',adminRouter)
 
 app.use(notFoundHandler);
 app.use(defaultErrorHandler);
 
-app.listen(port,()=>{
-    console.log(`Server listening on ${port}`)
+app.listen(process.env.PORT,()=>{
+    console.log(`Server listening on ${process.env.PORT}`)
 })

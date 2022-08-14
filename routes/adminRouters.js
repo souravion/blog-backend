@@ -3,7 +3,7 @@ const { CreateAdminUser, LoginController } = require('../controllers/admin/Admin
 const checkLogin = require('../middleware/common/checkLogin')
 const router = express.Router();
 
-router.post('/', checkLogin, CreateAdminUser);
+router.post('/', CreateAdminUser);
 router.post('/login', LoginController);
 module.exports = router;
 
