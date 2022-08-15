@@ -38,16 +38,24 @@ exports.LoginController = async (req, res) => {
             const isValidPassword = await bcrypt.compare(req.body.password, user.passsword)
             if(isValidPassword){
                 // Generate token
-               
                 const payload = {
                     name:user.name,
                     userId:user._id
                 }
-                const { accessToken } = await generateTokens(payload);
-                res.cookie(process.env.COOKIE_NAME,accessToken,{
+                const { accessToken ,  refreshToken} = await generateTokens(payload);
+                res.cookie(process.env.ACCESS_TOKEN_COOKIE_NAME,accessToken,{
                     httpOnly: true,
-                    singed:true
+                    singed:true,
+                    // maxAge: 60000
+                    
                 })
+
+                res.cookie(process.env.REFRESH_TOKEN_COOKIE_NAME,refreshToken,{
+                    httpOnly: true,
+                    singed:true,
+                    // maxAge: 60000
+                })
+
                     res.status(200).json({
                     "Message":"Login successfully"
                 })
@@ -69,4 +77,8 @@ exports.LoginController = async (req, res) => {
             message: e.message 
         });
     }
+}
+
+exports.CategoryController = async(req, res)=>{
+    res.send("Category Created")
 }
