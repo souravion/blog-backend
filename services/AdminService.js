@@ -1,6 +1,7 @@
 
 const {UserCreateSchema} = require('../models/AdminSchema')
 const mongoose = require("mongoose")
+const AddAdminUser = require('../models/AddAdminUserModelSchema')
 const adminUser = new mongoose.model('user',UserCreateSchema)
 
 exports.UserCreate = async (req,res)=> {
@@ -14,6 +15,26 @@ exports.UserCreate = async (req,res)=> {
 }
 
 exports.Login = async(req,res)=>{
+    try{
+        const user = await adminUser.findOne({email:req})
+        return user;
+    }catch {
+        throw Error('Authentication failed')
+    }
+
+}
+
+exports.AdminUserCreate = async (req,res)=> {
+    try {
+        const adminUserCreated = new AddAdminUser(req)
+        const newAdminUserCreated = await adminUserCreated.save()
+        return newAdminUserCreated;
+    } catch (e) {
+        throw Error('There was server side error!')
+    }
+}
+
+exports.FindUser = async(req,res)=>{
     try{
         const user = await adminUser.findOne({email:req})
         return user;

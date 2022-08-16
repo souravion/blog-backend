@@ -1,9 +1,7 @@
-const mongoose = require("mongoose")
-const {UserCreateSchema} = require('../../models/AdminSchema')
+
 const adminService = require('../../services/AdminService')
 const bcrypt = require('bcrypt');
 const { generateTokens } = require("../../utils/generateTokens");
-const jwt = require('jsonwebtoken');
 const { createCookies } = require("../../utils/createCookies");
 
 

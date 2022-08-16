@@ -1,0 +1,21 @@
+const adminService = require('../../services/AdminService')
+
+exports.AddAdminUserController = async (req, res) => {
+    try {
+        const postParams = {
+            name:req.body.name,
+            email:req.body.email,
+            created_by:res.locals.userId
+        }
+        console.log(postParams)
+        await adminService.AdminUserCreate(postParams)
+        return res.status(200).json({ 
+            "status": 200,  
+            "message": "User Succesfully Created" });
+    } catch (e) {
+        return res.status(400).json({ 
+            "status": 400, 
+            "message": e.message 
+        });
+    }
+}

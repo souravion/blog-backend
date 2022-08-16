@@ -9,6 +9,7 @@ const checkLogin =  (req,res, next)=>{
             if(token){
                 const {_id} = token
                 req.userId = _id
+                res.locals = {userId:_id}
                 next()
             }else{
                 res.status(401).json({
