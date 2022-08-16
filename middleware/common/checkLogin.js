@@ -1,46 +1,26 @@
 const jwt = require('jsonwebtoken');
+const { verifyRefreshToken } = require('../../utils/verifyRefreshToken');
 const token = ('../../utils/verifyRefreshToken.js')
-const  UserToken = require('../../models/UserToken')
-const { generateTokens } = require("../../utils/generateTokens");
 
 const checkLogin =  (req,res, next)=>{
-    const  { access_token ,refresh_token } = req.cookies
+    const  { access_token , refresh_token} = req.cookies
     jwt.verify(access_token, process.env.ACCESS_TOKEN_PRIVATE_KEY,(error,token)=>{
-        if(token){
-            next()
-        }else{
-
-            UserToken.findOne({ token: refresh_token }, (err, tokenDetails) => {
-                
-                jwt.verify(token, process.env.REFRESH_TOKEN_PRIVATE_KEY, async (err, token)=>{
-                    console.log(tokenDetails)
-
-
-                    const payload = {
-                        name:'sourav',
-                        userId:tokenDetails.userId
-
-                        
-                    }
-                    const { accessToken ,  refreshToken} = await generateTokens(payload);
-                    res.cookie(process.env.ACCESS_TOKEN_COOKIE_NAME,accessToken,{
-                        httpOnly: true,
-                        singed:true,
-                        // maxAge: 60000
-                        
-                    })
-    
-                    res.cookie(process.env.REFRESH_TOKEN_COOKIE_NAME,refreshToken,{
-                        httpOnly: true,
-                        singed:true,
-                        // maxAge: 60000
-                    })
-                    next()
+        if(!error){
+            if(token){
+                const {_id} = token
+                req.userId = _id
+                next()
+            }else{
+                res.status(401).json({
+                    "status":401,
+                    "error":"Authentication failed "
                 })
-                
-            });
-            
+            }
+        }else{
+            verifyRefreshToken(req,res,next,refresh_token)
+        
         }
+
 
     })
 }

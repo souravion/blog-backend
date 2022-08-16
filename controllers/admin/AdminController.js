@@ -4,6 +4,7 @@ const adminService = require('../../services/AdminService')
 const bcrypt = require('bcrypt');
 const { generateTokens } = require("../../utils/generateTokens");
 const jwt = require('jsonwebtoken');
+const { createCookies } = require("../../utils/createCookies");
 
 
 exports.CreateAdminUser = async (req, res) => {
@@ -42,21 +43,12 @@ exports.LoginController = async (req, res) => {
                     name:user.name,
                     userId:user._id
                 }
-                const { accessToken ,  refreshToken} = await generateTokens(payload);
-                res.cookie(process.env.ACCESS_TOKEN_COOKIE_NAME,accessToken,{
-                    httpOnly: true,
-                    singed:true,
-                    // maxAge: 60000
-                    
-                })
+                // after nenerateToken
+                const tokens = await generateTokens(payload);
+                // here we just send token and res to createCookies function as a parameters 
+                await createCookies(tokens,res)
 
-                res.cookie(process.env.REFRESH_TOKEN_COOKIE_NAME,refreshToken,{
-                    httpOnly: true,
-                    singed:true,
-                    // maxAge: 60000
-                })
-
-                    res.status(200).json({
+                res.status(200).json({
                     "Message":"Login successfully"
                 })
             }else{
