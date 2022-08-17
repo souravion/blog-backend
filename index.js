@@ -1,5 +1,4 @@
 require('dotenv').config({path: '.env'});
-
 const express = require('express');
 const db = require('./config/dbConnection');
 const {defaultErrorHandler, notFoundHandler} = require('./middleware/common/errorHandler')

@@ -8,12 +8,11 @@ exports.AddAdminUserController = async (req, res, next) => {
 
     try{
         const password = generatePassword()
-        const hashedPassword = await bcrypt.hash(password,10)
+        const hashedPassword = await bcrypt.hash(password,process.env.SALT_VALUE)
         const postParams = {
                     name:req.body.name,
                     email:req.body.email,
                     password:hashedPassword,
-                    created_by:res.locals.userId
                 }
         const result = await AddAdminschema.validateAsync(postParams)
         const doesExist = await adminService.FindUser(result.email)
@@ -21,10 +20,13 @@ exports.AddAdminUserController = async (req, res, next) => {
            throw createError.Conflict(`${result.email} is already been registered`)
             
         }else{
-            await adminService.AdminUserCreate(postParams)
-            return res.status(200).json({ 
-            "status": 200,  
-            "message": "User Succesfully Created" });
+            adminService.AdminUserCreate({...postParams,created_by:res.locals.userId}).then((res)=>{
+                return res.status(200).json({ 
+                "status": 200,  
+                "message": "User Succesfully Created" });
+            }).catch((error)=>{
+                next(error)
+            })
         }
         
     }catch(error){
