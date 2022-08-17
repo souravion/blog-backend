@@ -7,9 +7,9 @@ const AddAdminSchema = new Schema({
         type:String,
         required:true
     },
-    passsword:{
+    password:{
         type:String,
-        required:false,
+        required:true,
     },
     email:{
         type:String,

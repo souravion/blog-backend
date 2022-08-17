@@ -30,13 +30,13 @@ exports.AdminUserCreate = async (req,res)=> {
         const newAdminUserCreated = await adminUserCreated.save()
         return newAdminUserCreated;
     } catch (e) {
-        throw Error('There was server side error!')
+        throw Error('There was an server side error')
     }
 }
 
 exports.FindUser = async(req,res)=>{
     try{
-        const user = await adminUser.findOne({email:req})
+        const user = await AddAdminUser.findOne({email:req})
         return user;
     }catch {
         throw Error('Authentication failed')

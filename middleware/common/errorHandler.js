@@ -9,8 +9,6 @@ function notFoundHandler(req, res , next){
 }
 //default error error handler
 function defaultErrorHandler(err,req,res,next){
-    
-    console.log(err)
     res.status(err.status || 500)
     res.send({
         error:{
