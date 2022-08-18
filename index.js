@@ -14,6 +14,6 @@ app.use('/admin',adminRouter)
 app.use(notFoundHandler);
 app.use(defaultErrorHandler);
 
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT || 8080,()=>{
     console.log(`Server listening on ${process.env.PORT}`)
 })
