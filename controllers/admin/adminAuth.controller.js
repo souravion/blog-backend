@@ -6,7 +6,13 @@ const { createCookies } = require("../../helpers/createCookies.helpers");
 const  MESSAGE  = require('../../utils/errorMessges.utils');
 const { AppError, ERROR, ERRORCODE, } = require('../../utils/appError.utils');
 const { appResponse } = require('../../utils/appResponse.utils');
-
+/**
+ * 
+ * @param {request} req 
+ * @param {response} res 
+ * @param {passed to the middleware function} next 
+ * @returns 
+ */
 exports.CreateAdminUser = async (req, res, next) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.passsword,10)
@@ -24,11 +30,17 @@ exports.CreateAdminUser = async (req, res, next) => {
         next(e)
 }
 }
-// below controller for login 
 
-exports.LoginController = async (req, res,next) => {
+/**
+ * 
+ * @param {request} req 
+ * @param {response} res 
+ * @param {passed to the middleware function} next 
+ * @returns 
+ */
+exports.AdminLoginController = async (req, res,next) => {
     try {
-        const user = await adminService.Login(req.body.email)
+        const user = await adminService.AdminLogin(req.body.email)
         if(user && Object.keys(user).length > 0){
             const isValidPassword = await bcrypt.compare(req.body.password, user.passsword)
             if(isValidPassword){
@@ -55,3 +67,31 @@ exports.LoginController = async (req, res,next) => {
         next(error)
     }
 }
+
+/**
+ * 
+ * @param {request} req 
+ * @param {response} res 
+ * @param {passed to the middleware function} next 
+ * @returns 
+ */
+exports.AdminLogoutController = async (req, res,next) => {
+    const { refresh_token} = req.cookies
+    try{
+        const userToken = await adminService.FindAdminUser(refresh_token);
+
+        if(!userToken){
+            return appResponse(res,200, MESSAGE.USER_LOGGEDOUT)
+        }else{
+            await userToken.remove()
+            res.clearCookie('access_token');
+            res.clearCookie('refresh_token');
+            return appResponse(res,200, MESSAGE.USER_LOGGEDOUT)
+        }
+    }catch(error){
+        next(error)
+    }
+}
+
+
+

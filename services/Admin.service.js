@@ -3,6 +3,7 @@ const {UserCreateSchema} = require('../models/admin.model')
 const mongoose = require("mongoose")
 const AddAdminUser = require('../models/addAdminUser.model')
 const { AppError } = require('../utils/appError.utils')
+const UserToken = require('../models/userToken.model')
 const adminUser = new mongoose.model('user',UserCreateSchema)
 
 exports.UserCreate = async (req,res)=> {
@@ -15,7 +16,7 @@ exports.UserCreate = async (req,res)=> {
     }
 }
 
-exports.Login = async(req,res)=>{
+exports.AdminLogin = async(req,res)=>{
     try{
         const user = await adminUser.findOne({email:req})
         return user;
@@ -47,3 +48,15 @@ exports.FindUser = async(req,res)=>{
     }
 
 }
+
+
+exports.FindAdminUser = async(req,res)=>{
+    try{
+        const user = await UserToken.findOne({token: req})
+        return user;
+    }catch {
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+
+    }
+}
+
