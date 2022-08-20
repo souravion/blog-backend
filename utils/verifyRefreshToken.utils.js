@@ -1,5 +1,5 @@
 // this below function only responsible for verify refresh token
-const UserToken = require("../models/UserToken.model")
+const UserToken = require("../models/userToken.model")
 const { generateTokens } = require("./generateTokens.utils")
 const jwt = require("jsonwebtoken") 
 const { createCookies } = require("./createCookies.utils")
@@ -15,8 +15,14 @@ exports.verifyRefreshToken =  async(req, res , next , refresh_token)=>{
                                 userId:tokenDetails.userId 
                             }
                             const tokens = await generateTokens(payload);
-                            await createCookies(tokens,res)
-                            next()
+                            createCookies(tokens,res).then(()=>{
+                                next()
+                            }).catch(()=>{
+                                res.status(401).json({
+                                    "status":401,
+                                    "error":"Authentication failed "
+                                })
+                            })
                         }else{
                             res.status(401).json({
                                 "status":401,

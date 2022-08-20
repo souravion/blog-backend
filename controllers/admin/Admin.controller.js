@@ -1,9 +1,10 @@
 
-const adminService = require('../../services/Admin.service')
+const adminService = require('../../services/admin.service')
 const bcrypt = require('bcrypt');
 const { generateTokens } = require("../../utils/generateTokens.utils");
 const { createCookies } = require("../../utils/createCookies.utils");
-
+const {sendMessage } = require("../../utils/sendMessage.utils");
+const  MESSAGE  = require('../../utils/errorMessges.utils');
 
 exports.CreateAdminUser = async (req, res) => {
     try {
@@ -17,14 +18,9 @@ exports.CreateAdminUser = async (req, res) => {
             is_active:req.body.is_active
         }
         await adminService.UserCreate(postParams)
-        return res.status(200).json({ 
-            status: 200,  
-            message: "User Succesfully Created" });
+        return sendMessage(res, 200, MESSAGE.USER_CREATED)
     } catch (e) {
-        return res.status(400).json({ 
-            status: 400, 
-            message: e.message 
-        });
+        return sendMessage(res, 400, e.message)
     }
 }
 
@@ -46,26 +42,17 @@ exports.LoginController = async (req, res) => {
                 // here we just send token and res to createCookies function as a parameters 
                 await createCookies(tokens,res)
 
-                res.status(200).json({
-                    "Message":"Login successfully"
-                })
+                return sendMessage(res, 200, MESSAGE.USER_CREATED)
             }else{
-                res.status(401).json({
-                    "error":'Authentication failed'
-                })
+                return sendMessage(res, 401, MESSAGE.AUTHENTICATIION)
             }
             
         }else{
-            res.status(401).json({
-                "error":'Authentication failed'
-            })
+            return sendMessage(res, 401, MESSAGE.AUTHENTICATIION)
         }
 
     } catch (e) {
-        return res.status(400).json({ 
-            status: 400, 
-            message: e.message 
-        });
+        return sendMessage(res, 401, MESSAGE.AUTHENTICATIION)
     }
 }
 
