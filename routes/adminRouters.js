@@ -11,5 +11,11 @@ router.post('/addAdminUser', checkLogin, AddAdminUserController);
 router.post('/addBhola', (req, res)=>{
     res.send('Hellow bhola')
 });
+
+router.post('/hello', (req, res)=>{
+    res.send('Hellow sourav')
+});
+
+
 module.exports = router;
 
