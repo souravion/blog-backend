@@ -1,5 +1,6 @@
 const Category = require("../models/category.model")
-const { AppError } = require("../utils/appError.utils")
+const { AppError,ERROR,ERRORCODE } = require("../utils/appError.utils")
+const MESSAGE = require('../utils/errorMessges.utils')
 
 /**
  * 
@@ -8,13 +9,13 @@ const { AppError } = require("../utils/appError.utils")
  * @param {*} next 
  * @returns 
  */
-exports.AddCategory = async (req,res, next)=>{
+exports.AddCategory = async(req,res)=>{
     try{
         const category = new Category(req)
         const createdCategory = await category.save()
         return createdCategory
     }catch(error){
-        next(error)
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
 /**
@@ -22,7 +23,7 @@ exports.AddCategory = async (req,res, next)=>{
  * @param {*} req 
  * @param {*} res 
  */
-exports.GetCategories = async (req, res)=>{
+exports.GetCategories = async(req, res)=>{
     try{
         const getCategories = await Category.find({}).select({
           _id:0,
@@ -33,7 +34,7 @@ exports.GetCategories = async (req, res)=>{
         return getCategories
     }
     catch(error){
-        next(error)
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
 
@@ -45,10 +46,20 @@ exports.GetCategories = async (req, res)=>{
  */
 exports.FindCategory = async(req,res)=>{
     try{
-        const user = await Category.findOne({name:req})
-        return user;
+        const category = await Category.findOne({name:req})
+        return category;
     }catch(error) { 
-        next(error)
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
+}
 
+
+exports.ChangeStatus = async(id,req,res)=>{
+    try{
+        const ChangedStatus = await Category.findByIdAndUpdate(id,req);
+        return ChangedStatus
+    }
+    catch(error){
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
 }

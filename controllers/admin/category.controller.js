@@ -39,7 +39,7 @@ exports.CategoryController = async (req,res,next)=>{
     }
 }
 
-exports.GetCategoryController= async(req, res)=>{
+exports.GetCategoryController= async(req, res,next)=>{
     try{
         const getCategories = await categoryService.GetCategories()
         if(getCategories){
@@ -48,6 +48,23 @@ exports.GetCategoryController= async(req, res)=>{
             return  appResponse(res, 403, MESSAGE.NOTFOUND)
         }
     }catch(error){
+        next(error)
+    }
+}
+
+exports.ChangeCategoryController = async(req, res, next)=>{
+    try{
+        const id = req.params.id
+        postparams = {
+            is_active:req.body.status 
+        }
+        const statusChanged = await categoryService.ChangeStatus(id, postparams)
+        if(statusChanged){
+            return  appResponse(res, 200, MESSAGE.UPDATED)
+        }else{
+            return  appResponse(res, 403, MESSAGE.NOTEXISTS)
+        }
+    }catch{
         next(error)
     }
 }

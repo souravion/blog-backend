@@ -2,7 +2,7 @@ const express = require('express');
 const { AddAdminUserController } = require('../controllers/admin/addAdminUser.controller.js');
 
 const { CreateAdminUser, AdminLoginController ,AdminLogoutController } = require('../controllers/admin/adminAuth.controller');
-const { CategoryController , GetCategoryController } = require('../controllers/admin/category.controller.js');
+const { CategoryController , GetCategoryController , ChangeCategoryController } = require('../controllers/admin/category.controller.js');
 
 const checkLogin = require('../middleware/common/checkLogin')
 const router = express.Router();
@@ -12,5 +12,6 @@ router.delete('/logout', AdminLogoutController);
 router.post('/addAdminUser', checkLogin, AddAdminUserController);
 router.post('/addCategory', checkLogin, CategoryController);
 router.get('/getCategory', checkLogin, GetCategoryController);
+router.patch('/status/:id', checkLogin, ChangeCategoryController);
 module.exports = router;
 

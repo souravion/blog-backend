@@ -19,8 +19,9 @@ const AddCategorySchema = new Schema({
         type:String,
     },
     is_active:{
-        type: String,
-        default:'inactive'
+        type: [String],
+        enum:['active', 'inactive'],
+        default:['inactive']
     },
     isVerified:{
         type: Boolean,
