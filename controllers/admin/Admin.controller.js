@@ -1,8 +1,8 @@
 
-const adminService = require('../../services/AdminService')
+const adminService = require('../../services/Admin.service')
 const bcrypt = require('bcrypt');
-const { generateTokens } = require("../../utils/generateTokens");
-const { createCookies } = require("../../utils/createCookies");
+const { generateTokens } = require("../../utils/generateTokens.utils");
+const { createCookies } = require("../../utils/createCookies.utils");
 
 
 exports.CreateAdminUser = async (req, res) => {

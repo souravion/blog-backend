@@ -1,7 +1,7 @@
 const express = require('express');
-const { AddAdminUserController } = require('../controllers/admin/addAdminUserControllerjs');
+const { AddAdminUserController } = require('../controllers/admin/AddAdminUser.controller.js');
 
-const { CreateAdminUser, LoginController ,CategoryController } = require('../controllers/admin/AdminController');
+const { CreateAdminUser, LoginController ,CategoryController } = require('../controllers/admin/Admin.controller');
 const checkLogin = require('../middleware/common/checkLogin')
 const router = express.Router();
 router.post('/', CreateAdminUser);

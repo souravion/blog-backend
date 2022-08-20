@@ -1,7 +1,7 @@
 
-const {UserCreateSchema} = require('../models/AdminSchema')
+const {UserCreateSchema} = require('../models/AdminSchema.model')
 const mongoose = require("mongoose")
-const AddAdminUser = require('../models/AddAdminUserModelSchema')
+const AddAdminUser = require('../models/AddAdminUserSchema.model')
 const adminUser = new mongoose.model('user',UserCreateSchema)
 
 exports.UserCreate = async (req,res)=> {

@@ -1,8 +1,8 @@
 // this below function only responsible for verify refresh token
-const UserToken = require("../models/UserToken")
-const { generateTokens } = require("./generateTokens")
+const UserToken = require("../models/UserToken.model")
+const { generateTokens } = require("./generateTokens.utils")
 const jwt = require("jsonwebtoken") 
-const { createCookies } = require("./createCookies")
+const { createCookies } = require("./createCookies.utils")
 UserToken
 exports.verifyRefreshToken =  async(req, res , next , refresh_token)=>{
         UserToken.findOne({ token: refresh_token }, (error, tokenDetails) => {            
