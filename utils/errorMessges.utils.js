@@ -8,7 +8,8 @@ MESSAGE = {
     USER_LOGGEDOUT:'Succesfully Logout!',
     AUTHENTICATIION:"Authentication failed" ,
     SERVERSIDERROR:'There was an server side error !',
-    EXISTS:"already exists!"
+    EXISTS:"already exists!",
+    NOTFOUND:'Data not found!'
 
 }
 

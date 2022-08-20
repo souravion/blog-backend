@@ -38,3 +38,18 @@ exports.CategoryController = async (req,res,next)=>{
         }
     }
 }
+
+exports.GetCategoryController= async(req, res)=>{
+    try{
+        const getCategories = await categoryService.GetCategories()
+        if(getCategories){
+            res.send(getCategories)
+        }else {
+            return  appResponse(res, 403, MESSAGE.NOTFOUND)
+        }
+    }catch(error){
+        next(error)
+    }
+}
+
+

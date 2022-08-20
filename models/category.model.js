@@ -7,6 +7,7 @@ const AddCategorySchema = new Schema({
 	name: {
 		type: String,
 		required: true,
+        index: true,
 	},
     image:{
         type:String
@@ -18,13 +19,12 @@ const AddCategorySchema = new Schema({
         type:String,
     },
     is_active:{
-        type: [String],
-        enum:["active", "inactive"],
-        default:['inactive']
+        type: String,
+        default:'inactive'
     },
     isVerified:{
-        type: [Boolean],
-        default:[false],
+        type: Boolean,
+        default:false,
         
     },
 	createdby: {
