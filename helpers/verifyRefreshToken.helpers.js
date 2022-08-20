@@ -1,10 +1,10 @@
 // this below function only responsible for verify refresh token
 const UserToken = require("../models/userToken.model")
-const { generateTokens } = require("./generateTokens.utils")
+const { generateTokens } = require("./generateTokens.helpers")
 const jwt = require("jsonwebtoken") 
-const { createCookies } = require("./createCookies.utils")
-UserToken
+const { createCookies } = require("./createCookies.helpers")
 exports.verifyRefreshToken =  async(req, res , next , refresh_token)=>{
+       try{
         UserToken.findOne({ token: refresh_token }, (error, tokenDetails) => {            
             if(!error){
                 if(tokenDetails){
@@ -18,29 +18,20 @@ exports.verifyRefreshToken =  async(req, res , next , refresh_token)=>{
                             createCookies(tokens,res).then(()=>{
                                 next()
                             }).catch(()=>{
-                                res.status(401).json({
-                                    "status":401,
-                                    "error":"Authentication failed "
-                                })
+                                throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
                             })
                         }else{
-                            res.status(401).json({
-                                "status":401,
-                                "error":"Authentication failed "
-                            })
+                            throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
                         }
                     })
                 }else{
-                    res.status(401).json({
-                        "status":401,
-                        "error":"Authentication failed "
-                    })
+                    throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
                 }
             }else{
-                res.status(401).json({
-                    "status":401,
-                    "error":"Authentication failed "
-                })
+                throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
             }
         });
+       }catch(error){
+        next(error)
+       }
 }

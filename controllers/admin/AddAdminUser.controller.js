@@ -3,7 +3,7 @@ const { AddAdminschema } = require('../../validation/AddAdminSchema.validation')
 const createError = require('http-errors')
 const bcrypt = require('bcrypt');
 const { generatePassword } = require('../../utils/passwordGenerator.utils');
-const MESSAGE = require('../../utils/sendMessage.utils')
+const MESSAGE = require('../../utils/appResponse.utils')
 exports.AddAdminUserController = async (req, res, next) => {
 
     try{
@@ -21,7 +21,7 @@ exports.AddAdminUserController = async (req, res, next) => {
             
         }else{
             adminService.AdminUserCreate({...postParams,created_by:res.locals.userId}).then((res)=>{
-                return sendMessage(res, 200, MESSAGE.USER_CREATED)
+                return customErrorMessage(res, 200, MESSAGE.USER_CREATED)
             }).catch((error)=>{
                 next(error)
             })

@@ -2,6 +2,7 @@
 const {UserCreateSchema} = require('../models/admin.model')
 const mongoose = require("mongoose")
 const AddAdminUser = require('../models/addAdminUser.model')
+const { AppError } = require('../utils/appError.utils')
 const adminUser = new mongoose.model('user',UserCreateSchema)
 
 exports.UserCreate = async (req,res)=> {
@@ -10,7 +11,7 @@ exports.UserCreate = async (req,res)=> {
         const UserCreated = await newUserCreate.save()
         return UserCreated;
     } catch (e) {
-        throw Error('There was an server side error')
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
 
@@ -19,7 +20,8 @@ exports.Login = async(req,res)=>{
         const user = await adminUser.findOne({email:req})
         return user;
     }catch {
-        throw Error('Authentication failed')
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+
     }
 
 }
@@ -30,7 +32,8 @@ exports.AdminUserCreate = async (req,res)=> {
         const newAdminUserCreated = await adminUserCreated.save()
         return newAdminUserCreated;
     } catch (e) {
-        throw Error('There was an server side error')
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+
     }
 }
 
@@ -39,7 +42,8 @@ exports.FindUser = async(req,res)=>{
         const user = await AddAdminUser.findOne({email:req})
         return user;
     }catch {
-        throw Error('Authentication failed')
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+
     }
 
 }

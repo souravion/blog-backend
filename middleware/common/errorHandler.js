@@ -1,24 +1,20 @@
-// 404 not found
-const createError = require('http-errors')
-function notFoundHandler(req, res , next){
-    const error = new Error ('Your requested route not found')
-    error.status = 404
-    next(error);
- 
-   
-}
-//default error error handler
-function defaultErrorHandler(err,req,res,next){
-    res.status(err.status || 500)
-    res.send({
-        error:{
-            status:err.status || 500,
-            message:err.message
-        }
-    })
+
+
+exports.defaultErrorHandler = (err, req, res, next)=>{
+     let errorParams = {
+        status:err.statusCode || 500,
+        code:err.errorCode,
+        message: err.message,
+     }
+
+    if(process.env.NODE_ENV === 'dev'){
+        Object.assign(errorParams,{stack: err.stack}) 
+    }
+    res.status(err.statusCode || 500).json({
+        ...errorParams
+      })
+
 
 }
-module.exports = {
-    notFoundHandler,
-    defaultErrorHandler
-}
+
+

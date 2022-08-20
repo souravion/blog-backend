@@ -1,12 +1,13 @@
 
 const adminService = require('../../services/admin.service')
 const bcrypt = require('bcrypt');
-const { generateTokens } = require("../../utils/generateTokens.utils");
-const { createCookies } = require("../../utils/createCookies.utils");
-const {sendMessage } = require("../../utils/sendMessage.utils");
+const { generateTokens } = require("../../helpers/generateTokens.helpers");
+const { createCookies } = require("../../helpers/createCookies.helpers");
 const  MESSAGE  = require('../../utils/errorMessges.utils');
+const { AppError, ERROR, ERRORCODE, } = require('../../utils/appError.utils');
+const { appResponse } = require('../../utils/appResponse.utils');
 
-exports.CreateAdminUser = async (req, res) => {
+exports.CreateAdminUser = async (req, res, next) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.passsword,10)
         const postParams = {
@@ -18,15 +19,14 @@ exports.CreateAdminUser = async (req, res) => {
             is_active:req.body.is_active
         }
         await adminService.UserCreate(postParams)
-        return sendMessage(res, 200, MESSAGE.USER_CREATED)
+        return appResponse(res,200, MESSAGE.USER_CREATED)
     } catch (e) {
-        return sendMessage(res, 400, e.message)
-    }
+        next(e)
 }
-
+}
 // below controller for login 
 
-exports.LoginController = async (req, res) => {
+exports.LoginController = async (req, res,next) => {
     try {
         const user = await adminService.Login(req.body.email)
         if(user && Object.keys(user).length > 0){
@@ -42,20 +42,16 @@ exports.LoginController = async (req, res) => {
                 // here we just send token and res to createCookies function as a parameters 
                 await createCookies(tokens,res)
 
-                return sendMessage(res, 200, MESSAGE.USER_CREATED)
+                return appResponse(res,200, MESSAGE.USER_LOGGEDIN)
             }else{
-                return sendMessage(res, 401, MESSAGE.AUTHENTICATIION)
+                throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
             }
             
         }else{
-            return sendMessage(res, 401, MESSAGE.AUTHENTICATIION)
+            throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
         }
 
-    } catch (e) {
-        return sendMessage(res, 401, MESSAGE.AUTHENTICATIION)
+    } catch (error) {
+        next(error)
     }
-}
-
-exports.CategoryController = async(req, res)=>{
-    res.send("Category Created")
 }
