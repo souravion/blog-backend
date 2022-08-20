@@ -8,5 +8,8 @@ router.post('/', CreateAdminUser);
 router.post('/login', LoginController);
 router.post('/category', checkLogin ,CategoryController);
 router.post('/addAdminUser', checkLogin, AddAdminUserController);
+router.post('/addBhola', (req, res)=>{
+    res.send('Hellow bhola')
+});
 module.exports = router;
 
