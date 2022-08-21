@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { verifyRefreshToken } = require('../../utils/verifyRefreshToken.utils');
+const { verifyRefreshToken } = require('../../helpers/verifyRefreshToken.helpers');
 const token = ('../../utils/verifyRefreshToken.js')
 
 const checkLogin =  (req,res, next)=>{

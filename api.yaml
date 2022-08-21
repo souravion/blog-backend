@@ -1,0 +1,16 @@
+swagger: "2.0"
+info:
+  title: Koniat API
+  description: This is Koniat API Documentation
+  version: 1.0
+  contact:
+    email: ssourav.ion@gmail.com
+  liscence:
+    name: Apache 2.0
+    url: "http://www.apache.org/liscences/LIS"
+  servers:
+    -url: http://localhost:3000
+    description: This is my local Server
+    -url: http://example.com/
+    description: This is my original URL
+schemes: [https,http]
