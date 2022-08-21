@@ -63,3 +63,38 @@ exports.ChangeStatus = async(id,req,res)=>{
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
+
+
+exports.UpdateCategory = async (id, req, res) => {
+
+    try{
+        const updateCategory  = await Category.findOneAndUpdate(id,req)
+        return updateCategory
+    }catch{
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
+}
+
+exports.FindCategoryById = async(req,res)=>{
+    try{
+        const category = await Category.findOne({_id:req}).select({
+            __v:0,
+            createdby:0,
+            createdAt:0  
+          })
+        return category;
+    }catch(error) { 
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
+}
+
+
+exports.RemoveCategoryById = async(req, res)=>{
+    try{
+        const removeCategory = await Category.findByIdAndDelete({_id:req})
+        return removeCategory
+    }catch{
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
+
+}

@@ -1,6 +1,7 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
+const STATUS = ["active", "inactive"];
 
 const AddCategorySchema = new Schema({
 
@@ -23,6 +24,7 @@ const AddCategorySchema = new Schema({
         enum:['active', 'inactive'],
         default:['inactive']
     },
+
     isVerified:{
         type: Boolean,
         default:false,
