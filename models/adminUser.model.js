@@ -30,6 +30,6 @@ const AddAdminSchema = new Schema({
     }
 });
 
-const AddAdminUser = mongoose.model("AddAdminUsers", AddAdminSchema);
+const AdminUser = mongoose.model("AdminUsers", AddAdminSchema);
 
-module.exports =  AddAdminUser;
+module.exports =  AdminUser;

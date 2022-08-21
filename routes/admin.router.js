@@ -1,15 +1,16 @@
 const express = require('express');
 
 
-const { CreateAdminUser, AdminLoginController ,AdminLogoutController } = require('../controllers/admin/adminAuth.controller');
+const { AdminUserSingUpController , CreateAdminUser, AdminLoginController ,AdminLogoutController } = require('../controllers/admin/adminAuth.controller');
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
-const {AddAdminUserController} = require('../controllers/admin/addAdminUser.controller')
 const checkLogin = require('../middleware/common/checkLogin')
 const router = express.Router();
-router.post('/', CreateAdminUser);
+
+// router.post('/', CreateAdminUser);
+router.post('/signUp', AdminUserSingUpController);
 router.post('/login', AdminLoginController);
 router.delete('/logout', AdminLogoutController);
-router.post('/addAdminUser', checkLogin, AddAdminUserController);
+
 /** Category Section */
 router.post('/addCategory', checkLogin, CategoryController);
 router.get('/getCategory', checkLogin, GetCategoryController);
