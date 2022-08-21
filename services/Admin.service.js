@@ -6,6 +6,7 @@ const UserToken = require('../models/userToken.model')
 const adminUser = new mongoose.model('user',UserCreateSchema)
 const { AppError,ERROR,ERRORCODE } = require("../utils/appError.utils")
 const MESSAGE = require('../utils/errorMessges.utils')
+
 exports.UserCreate = async (req,res)=> {
     try {
         const newUserCreate = new adminUser(req)
