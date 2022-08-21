@@ -6,6 +6,10 @@ const adminRouter = require('./routes/admin.router')
 const app = express();
 var cookieParser = require('cookie-parser');
 const { AppError } = require('./utils/appError.utils');
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerJSDocs = YAML.load("./api.yaml");
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSDocs));
 
 db.databseConnection()
 app.use(express.json());
