@@ -18,6 +18,7 @@ app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET))
 app.use('/admin',adminRouter)
 app.use('/user',userRoute)
+app.set("trust proxy", true); // populate req.ip
 
 app.use(cors({credentials: true,  origin: [process.env.FRONTEND_APP_URL]})
   );
