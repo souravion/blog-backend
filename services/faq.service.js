@@ -45,3 +45,37 @@ exports.GetFaqs = async(req, res)=>{
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
+
+exports.ChangeStatus = async(id,req,res)=>{
+    try{
+        const ChangedStatus = await Faq.findByIdAndUpdate(id,req);
+        return ChangedStatus
+    }
+    catch(error){
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
+}
+
+
+exports.FindFaqById = async(req,res)=>{
+    try{
+        const faq = await Faq.findOne({_id:req}).select({
+            __v:0,
+            createdby:0,
+            createdAt:0  
+          })
+        return faq;
+    }catch(error) { 
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
+}
+
+exports.RemoveFaqById = async(req, res)=>{
+    try{
+        const removefaq = await Faq.findByIdAndDelete({_id:req})
+        return removefaq
+    }catch{
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
+
+}

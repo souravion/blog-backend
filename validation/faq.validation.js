@@ -11,3 +11,7 @@ exports.editFaqSchema = Joi.object({
     is_active:Joi.boolean().required()
     
 })
+
+exports.statusChangeFaqSchema = Joi.object({
+    is_active:Joi.boolean().required()    
+})
