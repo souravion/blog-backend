@@ -24,7 +24,7 @@ exports.ScrappingController = async (req, res, next)=>{
             eachBlogContent.blogUrl = blogUrl
             blogDetails.push(eachBlogContent)
 
-            res.json(eachBlogContent)
+            res.json(blogDetails)
         }
     }catch(error){
         next(error)

@@ -34,6 +34,7 @@ router.delete('/removeFaq/:id', checkLogin, RemoveFaqByIdController);
 
 /*********************** */
 router.post('/scraping', checkLogin, ScrappingController);
+// router.post('/addBlog', checkLogin, AddBlogController);
 /** End */
 
 

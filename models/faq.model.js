@@ -5,11 +5,13 @@ const Schema = mongoose.Schema;
 const FaqSchema = new Schema({
     title:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     description:{
         type:String,
-        required:true
+        required:true,
+        trim:true
     },
     is_active:{
         type: [String],
