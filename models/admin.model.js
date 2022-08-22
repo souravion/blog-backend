@@ -1,24 +1,23 @@
 const mongooes = require('mongoose')
 
 const UserCreateSchema = mongooes.Schema({
-    id:{
-        type:Number,
-        required:false,
-    },
     name:{
         type:String,
-        required:false
+        required:true,
+        trim:true,
     },
     passsword:{
         type:String,
-        required:false,
+        required:true,
     },
     email:{
         type:String,
-        required:false
+        required:true,
+        trim:true
     },
     mobile_number:{
-        type:Number
+        type:Number,
+        trim:true
     },
     created_by:{
         type:Number

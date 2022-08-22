@@ -6,6 +6,14 @@ const { createCookies } = require("../../helpers/createCookies.helpers");
 const  MESSAGE  = require('../../utils/errorMessges.utils');
 const { AppError, ERROR, ERRORCODE, } = require('../../utils/appError.utils');
 const { appResponse } = require('../../utils/appResponse.utils');
+const createError = require('http-errors')
+const { AddAdminschema } = require('../../validation/AddAdminSchema.validation')
+
+
+// const { generatePassword } = require('../../utils/passwordGenerator.utils');
+
+
+
 /**
  * 
  * @param {request} req 
@@ -13,22 +21,37 @@ const { appResponse } = require('../../utils/appResponse.utils');
  * @param {passed to the middleware function} next 
  * @returns 
  */
-exports.CreateAdminUser = async (req, res, next) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.passsword,10)
+
+exports.AdminUserSingUpController = async (req, res, next) => {
+
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password,10)
         const postParams = {
-            name:req.body.name,
-            passsword:hashedPassword,
-            email:req.body.email,
-            mobile_number:req.body.mobile_number,
-            created_by:req.body.created_by,
-            is_active:req.body.is_active
+                    name:req.body.name,
+                    email:req.body.email,
+                    password:hashedPassword,
+                }
+        const result = await AddAdminschema.validateAsync(postParams)
+        const doesExist = await adminService.FindUser(result.email)
+        if (doesExist){
+           throw createError.Conflict(`${result.email} is already been registered`)
+            
+        }else{
+            adminService.AdminUserCreate({...postParams,created_by:res.locals.userId}).then(()=>{
+                return appResponse(res, 200, MESSAGE.USER_CREATED)
+            }).catch((error)=>{
+                next(error)
+            })
         }
-        await adminService.UserCreate(postParams)
-        return appResponse(res,200, MESSAGE.USER_CREATED)
-    } catch (e) {
-        next(e)
-}
+        
+    }catch(error){
+        if(error.isJoi === true){
+        error.status = 422
+        next(error)
+        }
+        next(error)  
+    }
+
 }
 
 /**
@@ -41,8 +64,9 @@ exports.CreateAdminUser = async (req, res, next) => {
 exports.AdminLoginController = async (req, res,next) => {
     try {
         const user = await adminService.AdminLogin(req.body.email)
+        
         if(user && Object.keys(user).length > 0){
-            const isValidPassword = await bcrypt.compare(req.body.password, user.passsword)
+            const isValidPassword = await bcrypt.compare(req.body.password, user.password)
             if(isValidPassword){
                 // Generate token
                 const payload = {

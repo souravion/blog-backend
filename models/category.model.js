@@ -9,15 +9,19 @@ const AddCategorySchema = new Schema({
 		type: String,
 		required: true,
         index: true,
+        trim:true
 	},
     image:{
-        type:String
+        type:String,
+        trim:true
     },
     meta_title:{
         type:String,
+        trim:true
     },
     slug:{
         type:String,
+        trim:true
     },
     is_active:{
         type: [String],
