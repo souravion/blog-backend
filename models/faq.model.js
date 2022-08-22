@@ -2,27 +2,23 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const AddAdminSchema = new Schema({
-    name:{
+const FaqSchema = new Schema({
+    title:{
         type:String,
         required:true
     },
-    password:{
-        type:String,
-        required:true,
-    },
-    email:{
+    description:{
         type:String,
         required:true
-    },
-    createdby:{
-        type: Schema.Types.ObjectId,
-		required: false
     },
     is_active:{
         type: [String],
         enum:["active", "inactive"],
         default:['inactive']
+    },
+    createdby:{
+        type: Schema.Types.ObjectId,
+		required: false
     },
     date:{
         type:Date,
@@ -30,6 +26,6 @@ const AddAdminSchema = new Schema({
     }
 });
 
-const AdminUser = mongoose.model("AdminUsers", AddAdminSchema);
+const Faq = mongoose.model("Faq", FaqSchema);
 
-module.exports =  AdminUser;
+module.exports =  Faq;
