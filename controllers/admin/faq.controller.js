@@ -59,7 +59,7 @@ exports.GetFaqsController = async(req, res, next)=>{
         const faqs = await faqService.GetFaqs()
         console.log(faqs)
         if(faqs.length){
-            res.send(faqs)
+            res.json(faqs)
         }else{
             return  appResponse(res, 404, MESSAGE.NOTFOUND)
         }
@@ -98,7 +98,7 @@ exports.FindFaqByIdController = async(req, res, next)=>{
 
         const categoryResult = await faqService.FindFaqById(id)
         if(categoryResult){
-            res.send(categoryResult)
+            res.json(categoryResult)
         }else{
             return  appResponse(res, 403, MESSAGE.NOTFOUND)
         }

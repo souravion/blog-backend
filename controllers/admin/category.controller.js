@@ -43,7 +43,7 @@ exports.GetCategoryController= async(req, res,next)=>{
     try{
         const getCategories = await categoryService.GetCategories()
         if(getCategories.lenght){
-            res.send(getCategories)
+            res.json(getCategories)
         }else {
             return  appResponse(res, 404, MESSAGE.NOTFOUND)
         }
@@ -115,7 +115,7 @@ exports.FindCtegoryByIdController = async(req, res, next)=>{
 
         const categoryResult = await categoryService.FindCategoryById(id)
         if(categoryResult){
-            res.send(categoryResult)
+            res.json(categoryResult)
         }else{
             return  appResponse(res, 403, MESSAGE.NOTFOUND)
         }
