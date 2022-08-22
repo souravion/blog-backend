@@ -4,3 +4,10 @@ exports.faqSchema = Joi.object({
     description:Joi.string().min(3).max(200).required(),
     
 })
+
+exports.editFaqSchema = Joi.object({
+    title:Joi.string().min(3).max(30).required(),
+    description:Joi.string().min(3).max(200).required(),
+    is_active:Joi.boolean().required()
+    
+})

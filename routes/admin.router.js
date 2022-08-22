@@ -3,7 +3,7 @@ const express = require('express');
 
 const { AdminUserSingUpController , CreateAdminUser, AdminLoginController ,AdminLogoutController } = require('../controllers/admin/adminAuth.controller');
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
-const { addFaqController } = require('../controllers/admin/faq.controller');
+const { AddFaqController , UpdateFaqsController, GetFaqsController } = require('../controllers/admin/faq.controller');
 
 const checkLogin = require('../middleware/common/checkLogin')
 const router = express.Router();
@@ -23,7 +23,9 @@ router.delete('/removeCategory/:id', checkLogin, RemoveCtegoryByIdController);
 /**End*/
 
 /**FAQ */
-router.post('/addFaq', checkLogin, addFaqController);
+router.post('/addFaq', checkLogin, AddFaqController);
+router.get('/getFaqs', checkLogin, GetFaqsController);
+router.patch('/updateFaq/:id', checkLogin, UpdateFaqsController);
 
 /**END */
 

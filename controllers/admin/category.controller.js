@@ -42,10 +42,10 @@ exports.CategoryController = async (req,res,next)=>{
 exports.GetCategoryController= async(req, res,next)=>{
     try{
         const getCategories = await categoryService.GetCategories()
-        if(getCategories){
+        if(getCategories.lenght){
             res.send(getCategories)
         }else {
-            return  appResponse(res, 403, MESSAGE.NOTFOUND)
+            return  appResponse(res, 404, MESSAGE.NOTFOUND)
         }
     }catch(error){
         next(error)
@@ -94,7 +94,7 @@ exports.CategoryUpdateController = async(req, res, next)=>{
            if(result){
                return appResponse(res, 200, MESSAGE.UPDATED)
            }else{
-            return appResponse(res, 200, MESSAGE.NOTEXISTS)
+                return appResponse(res, 404, MESSAGE.NOTEXISTS)
            }
         }).catch((error)=>{
             next(error)
