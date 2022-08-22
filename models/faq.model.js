@@ -6,7 +6,8 @@ const FaqSchema = new Schema({
     title:{
         type:String,
         required:true,
-        trim:true
+        trim:true,
+        max: [2 , "Here is error"]
     },
     description:{
         type:String,

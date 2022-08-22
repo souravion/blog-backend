@@ -42,7 +42,7 @@ exports.CategoryController = async (req,res,next)=>{
 exports.GetCategoryController= async(req, res,next)=>{
     try{
         const getCategories = await categoryService.GetCategories()
-        if(getCategories.lenght){
+        if(getCategories.length){
             res.json(getCategories)
         }else {
             return  appResponse(res, 404, MESSAGE.NOTFOUND)

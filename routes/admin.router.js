@@ -10,6 +10,8 @@ const checkLogin = require('../middleware/common/checkLogin')
 const router = express.Router();
 
 // router.post('/', CreateAdminUser);
+
+
 router.post('/signUp', AdminUserSingUpController);
 router.post('/login', AdminLoginController);
 router.delete('/logout', AdminLogoutController);

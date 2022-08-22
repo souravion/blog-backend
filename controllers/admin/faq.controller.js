@@ -13,7 +13,6 @@ exports.AddFaqController = async(req, res, next)=>{
         const result = await faqSchema.validateAsync(postParam);
         const doExsit = await faqService.findFaq(result.title)
 
-        console.log(result)
         if(!doExsit){
             faqService.addfaq({...result,createdby:res.locals.userId,}).then(()=>{
                 return appResponse(res, 200, MESSAGE.CREATED)

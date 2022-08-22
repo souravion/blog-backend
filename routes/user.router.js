@@ -1,11 +1,10 @@
 const express = require('express');
+const { GetCategoryController } = require('../controllers/admin/category.controller');
 // const { CreateAdminUser } = require('../controllers/admin/AdminController');
 
 const userRoute = express.Router();
 
-userRoute.post('/', (req, res)=>{
-    res.send('Hi Bhola')
-});
+userRoute.get('/getCategory', GetCategoryController);
 
 module.exports = userRoute;
 
