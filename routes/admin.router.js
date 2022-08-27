@@ -12,7 +12,7 @@ const router = express.Router();
 // router.post('/', CreateAdminUser);
 
 
-router.post('/signUp', AdminUserSingUpController);
+router.post('/addSubadmin',checkLogin, AdminUserSingUpController);
 router.post('/login', AdminLoginController);
 router.delete('/logout', AdminLogoutController);
 
