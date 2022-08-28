@@ -15,6 +15,7 @@ const router = express.Router();
 router.post('/addSubadmin',checkLogin, AdminUserSingUpController);
 router.post('/login', AdminLoginController);
 router.delete('/logout', AdminLogoutController);
+router.patch('/changepassword', AdminLogoutController);
 
 /** Category Section */
 router.post('/addCategory', checkLogin, CategoryController);
