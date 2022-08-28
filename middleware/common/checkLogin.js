@@ -3,8 +3,10 @@ const { verifyRefreshToken } = require('../../helpers/verifyRefreshToken.helpers
 const token = ('../../utils/verifyRefreshToken.js')
 
 const checkLogin =  (req,res, next)=>{
-    const  { access_token , refresh_token} = req.cookies
-    jwt.verify(access_token, process.env.ACCESS_TOKEN_PRIVATE_KEY,(error,token)=>{
+    console.log(req.headers)
+    const  { accesstoken , refreshtoken} = req.headers
+    console.log(accesstoken)
+    jwt.verify(accesstoken, process.env.ACCESS_TOKEN_PRIVATE_KEY,(error,token)=>{
         if(!error){
             if(token){
                 const {_id} = token
@@ -18,8 +20,7 @@ const checkLogin =  (req,res, next)=>{
                 })
             }
         }else{
-            verifyRefreshToken(req,res,next,refresh_token)
-        
+            verifyRefreshToken(req,res,next,refreshtoken)
         }
 
 

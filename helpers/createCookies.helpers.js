@@ -3,12 +3,8 @@ exports.createCookies = async(req, res)=>{
     const {accessToken,  refreshToken} = req
     res.cookie(process.env.ACCESS_TOKEN_COOKIE_NAME,accessToken,{
         httpOnly: true,
-        singed:true, 
-        sameSite:'none'
     })
     res.cookie(process.env.REFRESH_TOKEN_COOKIE_NAME,refreshToken,{
         httpOnly: true,
-        singed:true,
-        sameSite: 'none'
     })
 }

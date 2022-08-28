@@ -76,9 +76,15 @@ exports.AdminLoginController = async (req, res,next) => {
                 // after nenerateToken
                 const tokens = await generateTokens(payload);
                 // here we just send token and res to createCookies function as a parameters 
-                await createCookies(tokens,res)
+                // await createCookies(tokens,res)
 
-                return appResponse(res,200, MESSAGE.USER_LOGGEDIN)
+                // return appResponse(res,200, MESSAGE.USER_LOGGEDIN)
+                res.status(200).json({
+                    status:200,
+                    message:MESSAGE.USER_LOGGEDIN,
+                    accessToken:tokens.accessToken,
+                    refreshToken:tokens.refreshToken
+                })
             }else{
                 throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
             }

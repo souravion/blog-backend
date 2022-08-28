@@ -11,18 +11,26 @@ const YAML = require("yamljs");
 const userRoute = require('./routes/user.router');
 const swaggerJSDocs = YAML.load("./api.yaml");
 const cors = require('cors')
-var front_end_url =''
+app.use(cookieParser(process.env.COOKIE_SECRET))
+app.use(cors(
+  {
+    origin: true, 
+    credentials: true, 
+    // methods: 'POST,GET,PUT,OPTIONS,DELETE'
+  }
+));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSDocs));
 db.databseConnection()
 // app.use(express.static('public'))
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(cookieParser(process.env.COOKIE_SECRET))
+
+
 app.use('/admin',adminRouter)
 app.use('/user',userRoute)
 
-app.use(cors({credentials: true,  origin: [process.env.FRONTEND_PRODUCTION , process.env.FRONTEND_DEV]})
-  );
+
+
 
 
 
