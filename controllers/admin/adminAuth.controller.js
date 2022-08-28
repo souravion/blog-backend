@@ -82,8 +82,7 @@ exports.AdminLoginController = async (req, res,next) => {
                 res.status(200).json({
                     status:200,
                     message:MESSAGE.USER_LOGGEDIN,
-                    accessToken:tokens.accessToken,
-                    refreshToken:tokens.refreshToken
+                    refreshToken:tokens.refreshToken,
                 })
             }else{
                 throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
