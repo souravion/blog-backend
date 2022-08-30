@@ -6,9 +6,8 @@ const checkLogin =  (req,res, next)=>{
     const  { refreshtoken } = req.headers
     jwt.verify(refreshtoken, process.env.REFRESH_TOKEN_PRIVATE_KEY,(error,token)=>{
         if(!error){
-            const {_id} = token
-            req.userId = _id
-            res.locals = {userId:_id}
+            const {userId} = token
+            Object.assign(res.locals , {userId:userId})
             next()
         }else if(error && error.message == 'jwt expired'){
             const decoded = jwt_decode(refreshtoken)
