@@ -37,12 +37,35 @@ exports.AdminLogin = async(req,res)=>{
 
 }
 
+exports.AdminTokenVerify = async(req,res)=>{
+    try{
+        const user = await UserToken.findOne({token:req})
+        return user;
+    }catch {
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+
+    }
+
+}
+
+
 
 
 exports.FindUser = async(req,res)=>{
     try{
         const user = await AdminUser.findOne({email:req})
         return user;
+    }catch {
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+
+    }
+
+}
+
+exports.FindUserById = async(req,res)=>{
+    try{
+        const userInfo = await AdminUser.findOne({_id:req})
+        return userInfo;
     }catch {
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
 
