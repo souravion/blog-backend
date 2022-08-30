@@ -4,11 +4,11 @@ const  UserToken = require('../models/userToken.model')
 
 const generateTokens = async (user) => {
 	try {
-		const payload = { _id: user.userId};
+		const payload = user;
 		const refreshToken = jwt.sign(
 			payload,
 			process.env.REFRESH_TOKEN_PRIVATE_KEY,
-			{ expiresIn: "30s" }
+			{ expiresIn: "1m" }
 		);
 		const accessToken = jwt.sign(
 			payload,

@@ -2,20 +2,24 @@
 const UserToken = require("../models/userToken.model")
 const { generateTokens } = require("./generateTokens.helpers")
 const jwt = require("jsonwebtoken") 
-const { createCookies } = require("./createCookies.helpers")
-const { AppError, ERROR, ERRORCODE, } = require('../utils/appError.utils');
-
+// const { createCookies } = require("./createCookies.helpers")
+// const { AppError, ERROR, ERRORCODE, } = require('../utils/appError.utils');
+const adminService = require('../services/admin.service')
 exports.verifyRefreshToken =  async(req, res , next , _id)=>{
-    console.log(_id)
        try{
-        UserToken.findOne({ userId: _id }, (error, tokenDetails) => {            
+        UserToken.findOne({ userId: _id }, async (error, tokenDetails) => {   
             if(!error){
                 if(tokenDetails){
                     const { token } = tokenDetails
+                    const usertokenInfo = await adminService.AdminTokenVerify(token)  
+                    const userinfo = await adminService.FindUserById(usertokenInfo.userId)
                     jwt.verify(token, process.env.ACCESS_TOKEN_PRIVATE_KEY, async (tokenError)=>{
                         if(!tokenError){
                             const payload = {
-                                userId:tokenDetails.userId 
+                                userId:userinfo._id,
+                                name:userinfo.name,
+                                email:userinfo.email,
+                                image:''
                             }
                             const tokens = await generateTokens(payload);
                             res.locals.refreshToken = tokens.refreshToken

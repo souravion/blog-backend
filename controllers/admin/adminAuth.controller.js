@@ -64,17 +64,19 @@ exports.AdminUserSingUpController = async (req, res, next) => {
 exports.AdminLoginController = async (req, res,next) => {
     try {
         const user = await adminService.AdminLogin(req.body.email)
-        
         if(user && Object.keys(user).length > 0){
             const isValidPassword = await bcrypt.compare(req.body.password, user.password)
             if(isValidPassword){
                 // Generate token
                 const payload = {
+                    userId:user._id,
                     name:user.name,
-                    userId:user._id
+                    email:user.email,
+                    image:''
                 }
                 // after nenerateToken
                 const tokens = await generateTokens(payload);
+                console.log(tokens)
                 // here we just send token and res to createCookies function as a parameters 
                 // await createCookies(tokens,res)
 
@@ -83,6 +85,11 @@ exports.AdminLoginController = async (req, res,next) => {
                     status:200,
                     message:MESSAGE.USER_LOGGEDIN,
                     refreshToken:tokens.refreshToken,
+                    data:{
+                        name:user.name,
+                        email:user.email,
+                        image:''
+                    }
                 })
             }else{
                 throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
@@ -123,6 +130,7 @@ exports.AdminLogoutController = async (req, res,next) => {
 }
 
 exports.CheckTokenController = async(req, res, next)=>{
+    const user = await adminService.AdminLogin(req.body.email)
     try{
         return appResponse(res,200, MESSAGE.USER_LOGGEDIN)
     }
