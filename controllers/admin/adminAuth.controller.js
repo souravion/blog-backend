@@ -76,7 +76,6 @@ exports.AdminLoginController = async (req, res,next) => {
                 }
                 // after nenerateToken
                 const tokens = await generateTokens(payload);
-                console.log(tokens)
                 // here we just send token and res to createCookies function as a parameters 
                 // await createCookies(tokens,res)
 
@@ -130,9 +129,20 @@ exports.AdminLogoutController = async (req, res,next) => {
 }
 
 exports.CheckTokenController = async(req, res, next)=>{
-    const user = await adminService.AdminLogin(req.body.email)
+   
+
     try{
-        return appResponse(res,200, MESSAGE.USER_LOGGEDIN)
+        const user = await adminService.AdminLogin(req.body.email)
+            res.status(200).json({
+                    status:200,
+                    message:MESSAGE.USER_LOGGEDIN,
+                    refreshToken:tokens.refreshToken,
+                    data:{
+                        name:user.name,
+                        email:user.email,
+                        image:''
+                    }
+        })
     }
     catch(error){
         next(error)
