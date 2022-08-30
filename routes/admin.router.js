@@ -1,7 +1,7 @@
 const express = require('express');
 
 
-const { AdminUserSingUpController , CreateAdminUser, AdminLoginController ,AdminLogoutController } = require('../controllers/admin/adminAuth.controller');
+const { CheckTokenController,AdminUserSingUpController , CreateAdminUser, AdminLoginController ,AdminLogoutController } = require('../controllers/admin/adminAuth.controller');
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
 const { AddFaqController , UpdateFaqsController, GetFaqsController, ChangeFaqStatusController ,FindFaqByIdController,RemoveFaqByIdController } = require('../controllers/admin/faq.controller');
 const { ScrappingController } = require('../controllers/admin/scrapping.controller');
@@ -16,6 +16,7 @@ router.post('/addSubadmin',checkLogin, AdminUserSingUpController);
 router.post('/login', AdminLoginController);
 router.delete('/logout', AdminLogoutController);
 router.patch('/changepassword', AdminLogoutController);
+router.post('/checkToken' , checkLogin,CheckTokenController) 
 
 /** Category Section */
 router.post('/addCategory', checkLogin, CategoryController);

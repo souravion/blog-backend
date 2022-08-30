@@ -122,5 +122,14 @@ exports.AdminLogoutController = async (req, res,next) => {
     }
 }
 
+exports.CheckTokenController = async(req, res, next)=>{
+    try{
+        return appResponse(res,200, MESSAGE.USER_LOGGEDIN)
+    }
+    catch(error){
+        next(error)
+    }
+}
+
 
 
