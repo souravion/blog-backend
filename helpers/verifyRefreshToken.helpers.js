@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 // const { createCookies } = require("./createCookies.helpers")
 // const { AppError, ERROR, ERRORCODE, } = require('../utils/appError.utils');
 const adminService = require('../services/admin.service')
+const { object } = require("joi")
 exports.verifyRefreshToken =  async(req, res , next , _id)=>{
        try{
         UserToken.findOne({ userId: _id }, async (error, tokenDetails) => {   
@@ -22,7 +23,9 @@ exports.verifyRefreshToken =  async(req, res , next , _id)=>{
                                 image:''
                             }
                             const tokens = await generateTokens(payload);
-                            res.locals.refreshToken = tokens.refreshToken
+                            Object.assign(res.locals , {refreshToken:tokens.refreshToken})
+                            Object.assign(res.locals , {userId:userinfo._id})
+                            
                             next()
                         }
                     })

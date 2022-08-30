@@ -129,17 +129,16 @@ exports.AdminLogoutController = async (req, res,next) => {
 }
 
 exports.CheckTokenController = async(req, res, next)=>{
-   
-
     try{
-        const user = await adminService.AdminLogin(req.body.email)
+        const userinfo = await adminService.FindUserById(res.locals.userId)
+        
             res.status(200).json({
                     status:200,
                     message:MESSAGE.USER_LOGGEDIN,
-                    refreshToken:tokens.refreshToken,
+                    refreshToken:res.locals.refreshToken,
                     data:{
-                        name:user.name,
-                        email:user.email,
+                        name:userinfo.name,
+                        email:userinfo.email,
                         image:''
                     }
         })
