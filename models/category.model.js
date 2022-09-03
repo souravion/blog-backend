@@ -11,11 +11,15 @@ const AddCategorySchema = new Schema({
         index: true,
         trim:true
 	},
-    image:{
+    color:{
         type:String,
         trim:true
     },
-    meta_title:{
+    backgroundcolor:{
+        type:String,
+        trim:true
+    },
+    image:{
         type:String,
         trim:true
     },
@@ -27,12 +31,6 @@ const AddCategorySchema = new Schema({
         type: [String],
         enum:['active', 'inactive'],
         default:['inactive']
-    },
-
-    isVerified:{
-        type: Boolean,
-        default:false,
-        
     },
 	createdby: {
 		type: Schema.Types.ObjectId,

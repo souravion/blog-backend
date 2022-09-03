@@ -8,7 +8,8 @@ exports.CategoryController = async (req,res,next)=>{
         let slug = ''
         const postParams = {
             name:req.body.name,
-            image:req.body.image,
+            color:req.body.color,
+            backgroundcolor:req.body.backgroundcolor,
         }
         slug  = req.body.name.split(" ")
         
@@ -43,7 +44,11 @@ exports.GetCategoryController= async(req, res,next)=>{
     try{
         const getCategories = await categoryService.GetCategories()
         if(getCategories.length){
-            res.json(getCategories)
+            res.json({
+                status:200,
+                message:'Fetch sucessfully!',
+                data:getCategories
+            })
         }else {
             return  appResponse(res, 404, MESSAGE.NOTFOUND)
         }
@@ -75,8 +80,9 @@ exports.CategoryUpdateController = async(req, res, next)=>{
         const id = req.params.id;
         postparams={
             name:req.body.name,
+            color:req.body.color,
+            backgroundcolor:req.body.backgroundcolor,
             image:req.body.image,
-            meta_title:req.body.metatitle,
             is_active:req.body.status,
             isVerified:req.body.verified
         }
@@ -115,7 +121,11 @@ exports.FindCtegoryByIdController = async(req, res, next)=>{
 
         const categoryResult = await categoryService.FindCategoryById(id)
         if(categoryResult){
-            res.json(categoryResult)
+            res.json({
+                status:200,
+                message:'Fetch sucessfully!',
+                data:categoryResult
+            })
         }else{
             return  appResponse(res, 403, MESSAGE.NOTFOUND)
         }
