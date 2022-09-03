@@ -10,6 +10,7 @@ exports.CategoryController = async (req,res,next)=>{
             name:req.body.name,
             color:req.body.color,
             backgroundcolor:req.body.backgroundcolor,
+            image:req.body.image,
         }
         slug  = req.body.name.split(" ")
         

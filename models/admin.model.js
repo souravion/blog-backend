@@ -22,9 +22,10 @@ const UserCreateSchema = mongooes.Schema({
     created_by:{
         type:Number
     },
-    is_active:{
+    status:{
         type:String,
-        enum:["active", "inactive"]
+        enum:"Pending" || "Active",
+        default:"Pending"
     },
     date:{
         type:Date,

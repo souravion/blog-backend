@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const STATUS = ["active", "inactive"];
-
+const AdminUsers = require('./adminUser.model')
 const AddCategorySchema = new Schema({
 
 	name: {
@@ -27,10 +27,10 @@ const AddCategorySchema = new Schema({
         type:String,
         trim:true
     },
-    is_active:{
-        type: [String],
-        enum:['active', 'inactive'],
-        default:['inactive']
+    status:{
+        type: String,
+        enum:'Pending' || 'Active',
+        default:'Pending'
     },
 	createdby: {
 		type: Schema.Types.ObjectId,
