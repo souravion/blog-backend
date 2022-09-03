@@ -56,9 +56,12 @@ exports.UpdateFaqsController = async(req, res , next)=>{
 exports.GetFaqsController = async(req, res, next)=>{
     try{
         const faqs = await faqService.GetFaqs()
-        console.log(faqs)
         if(faqs.length){
-            res.json(faqs)
+            res.json({
+                status:200,
+                message:'Fetch sucessfully!',
+                data:faqs
+            })
         }else{
             return  appResponse(res, 404, MESSAGE.NOTFOUND)
         }
@@ -97,7 +100,11 @@ exports.FindFaqByIdController = async(req, res, next)=>{
 
         const categoryResult = await faqService.FindFaqById(id)
         if(categoryResult){
-            res.json(categoryResult)
+            res.json({
+                status:200,
+                message:'Fetch sucessfully!',
+                data:categoryResult
+            })
         }else{
             return  appResponse(res, 403, MESSAGE.NOTFOUND)
         }
