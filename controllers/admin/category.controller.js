@@ -10,6 +10,7 @@ exports.CategoryController = async (req,res,next)=>{
             name:req.body.name,
             color:req.body.color,
             backgroundcolor:req.body.backgroundcolor,
+            image:req.body.image,
         }
         slug  = req.body.name.split(" ")
         
@@ -43,6 +44,7 @@ exports.CategoryController = async (req,res,next)=>{
 exports.GetCategoryController= async(req, res,next)=>{
     try{
         const getCategories = await categoryService.GetCategories()
+        console.log(getCategories)
         if(getCategories.length){
             res.json({
                 status:200,
@@ -83,8 +85,7 @@ exports.CategoryUpdateController = async(req, res, next)=>{
             color:req.body.color,
             backgroundcolor:req.body.backgroundcolor,
             image:req.body.image,
-            is_active:req.body.status,
-            isVerified:req.body.verified
+            status:req.body.status,
         }
 
         slug  = req.body.name.split(" ")
@@ -150,6 +151,26 @@ exports.RemoveCtegoryByIdController = async (req, res, next)=>{
         
     }catch(error){
        next(error)
+    }
+}
+
+/**Get category for users  */
+
+exports.GetUserCategoryController= async(req, res,next)=>{
+    try{
+        const getCategories = await categoryService.GetUserCategories()
+        console.log(getCategories)
+        if(getCategories.length){
+            res.json({
+                status:200,
+                message:'Fetch sucessfully!',
+                data:getCategories
+            })
+        }else {
+            return  appResponse(res, 204, MESSAGE.NOTFOUND)
+        }
+    }catch(error){
+        next(error)
     }
 }
 
