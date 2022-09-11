@@ -30,7 +30,7 @@ const AddCategorySchema = new Schema({
     status:{
         type: String,
         enum:'Pending' || 'Active',
-        default:'Pending'
+        default:'Active'
     },
 	createdby: {
 		type: Schema.Types.ObjectId,
