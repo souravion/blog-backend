@@ -27,9 +27,7 @@ exports.AddCategory = async(req,res)=>{
 exports.GetCategories = async(req, res)=>{
     
     try{
-
-
-        const getCategories1 = await Category.aggregate([
+        const getCategories = await Category.aggregate([
             {
                 $lookup:
                 {
@@ -43,24 +41,27 @@ exports.GetCategories = async(req, res)=>{
                 $unwind:"$created"
             },
             {
+
                 $project:
                 {
-                    "_id":0,
+                    // "_id":0,
                     "__v":0,
                     "createdby":0,
-                    "createdAt":0,
+                    // "createdAt":1,
                     "created._id":0,
                     "created.password":0,
                     "created.email":0,
                     "created.is_active":0,
                     "created.date":0,
                     "created.__v":0,
-                }
-            }
+                    // "created.createdAt":1,
+
+                },
+            },
+      
         ])
         
-        // console.log(getCategories1)
-        return getCategories1
+        return getCategories
 
         // console.log("getCategories1", getCategories1)
         // await Category.find({}).populate('').exec(function(err, documents){
@@ -139,4 +140,28 @@ exports.RemoveCategoryById = async(req, res)=>{
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 
+}
+
+/***Get category for user app */
+exports.GetUserCategories = async(req, res)=>{
+    
+    try{
+        // "name": "Tessdtss1ssd2ds",
+        // "color": "Tesdsst",
+        // "backgroundcolor": "Test",
+        // "image": "Test",
+        // "slug": "tessdtss1ssd2ds",
+        // "status": "Active"
+        const getCategories = await Category.find({status:"Active"}).select({
+          __v:0,
+          createdby:0,
+          createdAt:0 ,
+          status:0,
+          slug:0 
+        })
+        return getCategories
+    }
+    catch(error){
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
 }

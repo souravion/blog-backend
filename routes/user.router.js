@@ -1,10 +1,10 @@
 const express = require('express');
-const { GetCategoryController } = require('../controllers/admin/category.controller');
+const { GetUserCategoryController } = require('../controllers/admin/category.controller');
 // const { CreateAdminUser } = require('../controllers/admin/AdminController');
 
 const userRoute = express.Router();
 
-userRoute.get('/getCategory', GetCategoryController);
+userRoute.get('/getCategory', GetUserCategoryController);
 
 module.exports = userRoute;
 
