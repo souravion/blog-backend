@@ -29,7 +29,7 @@ const AddCategorySchema = new Schema({
     },
     status:{
         type: String,
-        enum:'Pending' || 'Active',
+        enum:'Active' || 'Pending',
         default:'Active'
     },
 	createdby: {
