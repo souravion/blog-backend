@@ -44,7 +44,6 @@ exports.CategoryController = async (req,res,next)=>{
 exports.GetCategoryController= async(req, res,next)=>{
     try{
         const getCategories = await categoryService.GetCategories()
-        console.log(getCategories)
         if(getCategories.length){
             res.json({
                 status:200,
@@ -63,7 +62,7 @@ exports.ChangeCategoryStatusController = async(req, res, next)=>{
     try{
         const id = req.params.id
         postparams = {
-            is_active:req.body.status 
+            status:req.body.status 
         }
         const statusChanged = await categoryService.ChangeStatus(id, postparams)
         if(statusChanged){
