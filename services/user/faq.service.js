@@ -5,8 +5,7 @@ const MESSAGE = require('../../utils/errorMessges.utils')
 exports.GetFaqs = async(req, res)=>{
     try{
 
-        const getFaqs = await Faq.find({}).select({
-            _id:0,
+        const getFaqs = await Faq.find({status:"Active"}).select({
             __v:0,
             createdby:0,
             createdAt:0, 
