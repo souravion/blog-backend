@@ -7,17 +7,16 @@ const FaqSchema = new Schema({
         type:String,
         required:true,
         trim:true,
-        max: [2 , "Here is error"]
     },
     description:{
         type:String,
         required:true,
         trim:true
     },
-    is_active:{
-        type: [String],
-        enum:["active", "inactive"],
-        default:['inactive']
+    status:{
+        type: String,
+        enum: "Active" || "Inactive",
+        default:'Active'
     },
     createdby:{
         type: Schema.Types.ObjectId,
