@@ -77,7 +77,6 @@ exports.ChangeFaqStatusController = async (req, res , next)=>{
             is_active:req.body.status
         }
         const validationResult = await statusChangeFaqSchema.validateAsync(postparams)
-        console.log(validationResult)
         if(validationResult){
             faqService.ChangeStatus(id, validationResult).then((result)=>{
                 if(result){
