@@ -34,7 +34,6 @@ exports.UpdateFaqsController = async(req, res , next)=>{
         postparams = {
             title:req.body.title,
             description:req.body.desc,
-            status:req.body.status
         }
 
         const validationResult = await editFaqSchema.validateAsync(postparams)
