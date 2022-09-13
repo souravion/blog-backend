@@ -34,13 +34,41 @@ exports.UpdateFaq = async (id, req, res)=>{
 exports.GetFaqs = async(req, res)=>{
     try{
 
-        const getFaqs = await Faq.find({}).select({
-            _id:0,
-            __v:0,
-            createdby:0,
-            createdAt:0  
-        })
+        const getFaqs = await Faq.aggregate([
+            {
+                $lookup:
+                {
+                    from: 'adminusers',
+                    localField: 'createdby',
+                    foreignField:'_id',
+                    as: "created"
+                }
+            },
+            {
+                $unwind:"$created"
+            },
+            {
+
+                $project:
+                {
+                    // "_id":0,
+                    "__v":0,
+                    "createdby":0,
+                    // "createdAt":1,
+                    "created._id":0,
+                    "created.password":0,
+                    "created.email":0,
+                    "created.is_active":0,
+                    "created.date":0,
+                    "created.__v":0,
+                    // "created.createdAt":1,
+
+                },
+            }
+        ])
+        
         return getFaqs
+
     }catch{
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
