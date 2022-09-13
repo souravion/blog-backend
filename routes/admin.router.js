@@ -1,5 +1,5 @@
 const express = require('express');
-const { AddAdminController } = require('../controllers/admin/addAdmin.controller');
+const { AddAdminController,GeAdminController } = require('../controllers/admin/addAdmin.controller');
 const { CheckTokenController, AdminLoginController ,AdminLogoutController } = require('../controllers/admin/adminAuth.controller');
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
 const { AddFaqController , UpdateFaqsController, GetFaqsController, ChangeFaqStatusController ,FindFaqByIdController,RemoveFaqByIdController } = require('../controllers/admin/faq.controller');
@@ -12,6 +12,8 @@ const router = express.Router();
 
 
 router.post('/addSubadmin',checkLogin, AddAdminController);
+router.get('/getAdmins',checkLogin, GeAdminController);
+
 router.post('/login', AdminLoginController);
 router.delete('/logout', AdminLogoutController);
 router.patch('/changepassword', AdminLogoutController);

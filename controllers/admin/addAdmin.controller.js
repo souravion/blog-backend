@@ -51,3 +51,21 @@ const { generatePassword } = require('../../utils/passwordGenerator.utils');
     }
 
 }
+
+exports.GeAdminController= async(req, res,next)=>{
+    try{
+        
+        const getAddmin = await addAdminService.GetAdmin(req)
+        if(getAddmin.length){
+            res.json({
+                status:200,
+                message:'Fetch sucessfully!',
+                data:getAddmin
+            })
+        }else {
+            return  appResponse(res, 404, MESSAGE.NOTFOUND)
+        }
+    }catch(error){
+        next(error)
+    }
+}
