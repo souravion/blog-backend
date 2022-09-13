@@ -34,7 +34,7 @@ exports.UpdateFaqsController = async(req, res , next)=>{
         postparams = {
             title:req.body.title,
             description:req.body.desc,
-            is_active:req.body.status
+            status:req.body.status
         }
 
         const validationResult = await editFaqSchema.validateAsync(postparams)
@@ -48,7 +48,7 @@ exports.UpdateFaqsController = async(req, res , next)=>{
         }).catch((error)=>{
             next(error)
         })
-    }catch{
+    }catch(error){
         next(error)
     }
 }
@@ -74,7 +74,7 @@ exports.ChangeFaqStatusController = async (req, res , next)=>{
     try{
         const id = req.params.id
         postparams = {
-            is_active:req.body.status
+            status:req.body.status
         }
         const validationResult = await statusChangeFaqSchema.validateAsync(postparams)
         if(validationResult){
