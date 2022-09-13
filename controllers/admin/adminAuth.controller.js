@@ -14,45 +14,7 @@ const { AddAdminschema } = require('../../validation/AddAdminSchema.validation')
 
 
 
-/**
- * 
- * @param {request} req 
- * @param {response} res 
- * @param {passed to the middleware function} next 
- * @returns 
- */
 
-exports.AdminUserSingUpController = async (req, res, next) => {
-
-    try{
-        const hashedPassword = await bcrypt.hash(req.body.password,10)
-        const postParams = {
-                    name:req.body.name,
-                    email:req.body.email,
-                    password:hashedPassword,
-                }
-        const result = await AddAdminschema.validateAsync(postParams)
-        const doesExist = await adminService.FindUser(result.email)
-        if (doesExist){
-           throw createError.Conflict(`${result.email} is already been registered`)
-            
-        }else{
-            adminService.AdminUserCreate({...postParams,created_by:res.locals.userId}).then(()=>{
-                return appResponse(res, 200, MESSAGE.USER_CREATED)
-            }).catch((error)=>{
-                next(error)
-            })
-        }
-        
-    }catch(error){
-        if(error.isJoi === true){
-        error.status = 422
-        next(error)
-        }
-        next(error)  
-    }
-
-}
 
 /**
  * 
