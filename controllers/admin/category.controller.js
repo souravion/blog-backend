@@ -43,7 +43,8 @@ exports.CategoryController = async (req,res,next)=>{
 
 exports.GetCategoryController= async(req, res,next)=>{
     try{
-        const getCategories = await categoryService.GetCategories()
+        
+        const getCategories = await categoryService.GetCategories(req)
         if(getCategories.length){
             res.json({
                 status:200,
