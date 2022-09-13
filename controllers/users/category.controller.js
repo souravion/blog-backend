@@ -6,7 +6,7 @@ const { appResponse } = require("../../utils/appResponse.utils");
 exports.GetUserCategoryController= async(req, res,next)=>{
     try{
         const getCategories = await categoryService.GetUserCategories()
-        console.log(getCategories)
+        
         if(getCategories.length){
             res.json({
                 status:200,

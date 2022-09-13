@@ -25,56 +25,42 @@ exports.AddCategory = async(req,res)=>{
  * @param {*} res 
  */
 exports.GetCategories = async(req, res)=>{
-    
     try{
+        const {page= 1 , limit=2} = req.query
         const getCategories = await Category.aggregate([
-            {
-                $lookup:
                 {
-                    from: 'adminusers',
-                    localField: 'createdby',
-                    foreignField:'_id',
-                    as: "created"
-                }
-            },
-            {
-                $unwind:"$created"
-            },
-            {
-
-                $project:
-                {
-                    // "_id":0,
-                    "__v":0,
-                    "createdby":0,
-                    // "createdAt":1,
-                    "created._id":0,
-                    "created.password":0,
-                    "created.email":0,
-                    "created.is_active":0,
-                    "created.date":0,
-                    "created.__v":0,
-                    // "created.createdAt":1,
-
+                    $lookup:
+                    {
+                        from: 'adminusers',
+                        localField: 'createdby',
+                        foreignField:'_id',
+                        as: "created"
+                    }
                 },
-            },
-      
-        ])
-        
+                {
+                    $unwind:"$created"
+                },
+                {
+    
+                    $project:
+                    {
+                        // "_id":0,
+                        "__v":0,
+                        "createdby":0,
+                        // "createdAt":1,
+                        "created._id":0,
+                        "created.password":0,
+                        "created.email":0,
+                        "created.is_active":0,
+                        "created.date":0,
+                        "created.__v":0,
+                        // "created.createdAt":1,
+    
+                    },
+                },
+          
+            ]).limit(limit*1).skip((page-1)*limit)
         return getCategories
-
-        // console.log("getCategories1", getCategories1)
-        // await Category.find({}).populate('').exec(function(err, documents){
-        //     console.log(documents)
-        //     // you will get drinks object in response 
-        // })
-        // const getCategories = await Category.find({}).select({
-        //   _id:0,
-        //   __v:0,
-        //   createdby:0,
-        //   createdAt:0  
-        // })
-        // return getCategories
     }
     catch(error){
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
