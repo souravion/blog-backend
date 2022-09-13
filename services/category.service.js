@@ -26,7 +26,7 @@ exports.AddCategory = async(req,res)=>{
  */
 exports.GetCategories = async(req, res)=>{
     try{
-        const {page= 1 , limit=2} = req.query
+        const {page= 1 , limit=10} = req.query
         const getCategories = await Category.aggregate([
                 {
                     $lookup:
