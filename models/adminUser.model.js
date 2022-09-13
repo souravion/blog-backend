@@ -8,30 +8,32 @@ const AddAdminSchema = new Schema({
         required:true,
         trim:true
     },
-    password:{
-        type:String,
-        required:true,
-        trim:true
-    },
     email:{
         type:String,
         required:true,
-        trim:true
+    },
+    password:{
+        type:String,
+        required:true,
+    },
+    description:{
+        type:String,
+        required:true
+    },
+    permission:{
+        type:Object,
+        default:null
+    },
+    status:{
+        type: String,
+        enum:"Pending" || "Active",
+        default:'Pending'
     },
     createdby:{
         type: Schema.Types.ObjectId,
-		required: false,
+		required: true,
         trim:true
     },
-    is_active:{
-        type: [String],
-        enum:["active", "inactive"],
-        default:['inactive']
-    },
-    date:{
-        type:Date,
-        default:Date.now
-    }
 });
 
 const AdminUser = mongoose.model("adminuser", AddAdminSchema);
