@@ -16,13 +16,18 @@ const AddAdminSchema = new Schema({
         type:String,
         required:true,
     },
-    description:{
+    desc:{
         type:String,
         required:true
     },
     permission:{
         type:Object,
         default:null
+    },
+    isEmailVarified:{
+        type: Boolean,
+        enum: false || true,
+        default:false
     },
     status:{
         type: String,
