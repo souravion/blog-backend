@@ -16,40 +16,67 @@ exports.AddAdmin = async (req,res)=> {
 
 exports.GetAdmin = async(req, res)=>{
     try{
-        const {page= 1 , limit=10} = req.query
-        const getAddmin = await AdminUser.aggregate([
-                {
-                    $lookup:
-                    {
-                        from: 'adminusers',
-                        localField: 'createdby',
-                        foreignField:'_id',
-                        as: "created"
-                    }
-                },
-                {
-                    $unwind:"$created"
-                },
-                {
+        const {page =2 , limit=10} = req.query
+        const startIndex = (page - 1) * limit
+        const endIndex = page * limit
+  
+      const results = {}
+     
+    if (endIndex <  await AdminUser.countDocuments().exec()) {
+        results.next = {
+          page: page + 1,
+          limit: limit
+        }
+       
+      }
+      
+      if (startIndex > 0) {
     
-                    $project:
+        results.previous = {
+          page: page - 1,
+          limit: limit
+        }
+       
+      }
+      try {
+        // results.results = await AdminUser.find().limit(limit).skip(startIndex).exec()
+        results.results = await AdminUser.aggregate([
                     {
-                        "__v":0,
-                        "createdby":0,
-                        "password":0,
-                        // "created._id":0,
-                        "created.password":0,
-                        "created.email":0,
-                        "created.is_active":0,
-                        "created.date":0,
-                        "created.__v":0,
-                        "created.description":0
-    
+                        $lookup:
+                        {
+                            from: 'adminusers',
+                            localField: '_id',
+                            foreignField:'createdby',
+                            as: "created"
+                        }
                     },
-                },
-          
-            ]).limit(limit*1).skip((page-1)*limit)
-        return getAddmin
+                    {
+                        $unwind:"$created"
+                    },
+                    {
+        
+                        $project:
+                        {
+                            "__v":0,
+                            "createdby":0,
+                            "password":0,
+                            // "created._id":0,
+                            "created.password":0,
+                            "created.email":0,
+                            "created.is_active":0,
+                            "created.date":0,
+                            "created.__v":0,
+                            "created.description":0
+        
+                        },
+                    },
+                ]).limit(limit).skip(startIndex).exec()
+
+        return results
+      } catch (e) {
+        res.status(500).json({ message: e.message })
+      }
+    
     }
     catch(error){
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
