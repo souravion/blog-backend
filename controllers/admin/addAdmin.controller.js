@@ -56,13 +56,7 @@ exports.GeAdminController= async(req, res,next)=>{
     try{
 
 
-        const getAdmin = await addAdminService.GetAdmin(req)
-        console.log(getAdmin.results.length);
-        res.json({
-            status:200,
-            message:'Fetch sucessfully!',
-            data:getAdmin
-        })
+        const getAdmin = await addAdminService.GetAdmin(req)       
         if(getAdmin.results.length > 0){
             res.json({
                 status:200,
@@ -70,7 +64,7 @@ exports.GeAdminController= async(req, res,next)=>{
                 data:getAdmin
             })
         }else {
-            // return  appResponse(res, 404, MESSAGE.NOTFOUND)
+            return  appResponse(res, 404, MESSAGE.NOTFOUND)
         }
     }catch(error){
         next(error)

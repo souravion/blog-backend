@@ -11,7 +11,7 @@ const router = express.Router();
 // router.post('/', CreateAdminUser);
 
 
-router.post('/addSubadmin',checkLogin, AddAdminController);
+router.post('/addSubadmin', AddAdminController);
 router.get('/getAdmins',checkLogin, GeAdminController);
 
 router.post('/login', AdminLoginController);
