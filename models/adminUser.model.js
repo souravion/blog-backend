@@ -1,4 +1,5 @@
 
+
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
@@ -29,6 +30,10 @@ const AddAdminSchema = new Schema({
         enum: false || true,
         default:false
     },
+    image:{
+        type:String,
+        default:null
+    },
     status:{
         type: String,
         enum:"Pending" || "Active",
@@ -38,6 +43,10 @@ const AddAdminSchema = new Schema({
         type: Schema.Types.ObjectId,
 		required: true,
         trim:true
+    },
+    createdAt:{
+        type: Date,
+		default:Date.now
     },
 });
 
