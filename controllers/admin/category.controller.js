@@ -1,5 +1,5 @@
 const { AddCategoryschema, EditCateogrySchema } = require("../../validation/category.validation")
-const categoryService = require('../../services/category.service')
+const categoryService = require('../../services/admin/category.service')
 const MESSAGE = require('../../utils/errorMessges.utils')
 const { appResponse } = require("../../utils/appResponse.utils");
 

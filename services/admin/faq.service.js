@@ -1,6 +1,6 @@
-const Faq = require("../models/faq.model")
-const { AppError,ERROR,ERRORCODE } = require("../utils/appError.utils")
-const MESSAGE = require('../utils/errorMessges.utils')
+const Faq = require("../../models/faq.model")
+const { AppError,ERROR,ERRORCODE } = require("../../utils/appError.utils")
+const MESSAGE = require('../../utils/errorMessges.utils')
 
 exports.addfaq = async(req, res)=>{
     try{

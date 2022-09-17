@@ -1,4 +1,4 @@
-const faqService = require("../../services/faq.service")
+const faqService = require("../../services/admin/faq.service")
 const { faqSchema ,editFaqSchema , statusChangeFaqSchema } = require("../../validation/faq.validation")
 const MESSAGE = require('../../utils/errorMessges.utils')
 const { appResponse } = require("../../utils/appResponse.utils");

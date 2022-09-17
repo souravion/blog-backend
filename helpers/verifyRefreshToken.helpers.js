@@ -4,7 +4,7 @@ const { generateTokens } = require("./generateTokens.helpers")
 const jwt = require("jsonwebtoken") 
 // const { createCookies } = require("./createCookies.helpers")
 // const { AppError, ERROR, ERRORCODE, } = require('../utils/appError.utils');
-const adminService = require('../services/admin.service')
+const adminService = require('../services/admin/admin.service')
 const { object } = require("joi")
 exports.verifyRefreshToken =  async(req, res , next , _id)=>{
        try{

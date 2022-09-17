@@ -1,5 +1,5 @@
 
-const adminService = require('../../services/admin.service')
+const adminService = require('../../services/admin/admin.service')
 const bcrypt = require('bcrypt');
 const { generateTokens } = require("../../helpers/generateTokens.helpers");
 const { createCookies } = require("../../helpers/createCookies.helpers");

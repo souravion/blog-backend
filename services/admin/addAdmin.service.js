@@ -1,7 +1,7 @@
 
-const AdminUser = require('../models/adminUser.model')
-const { AppError,ERROR,ERRORCODE } = require("../utils/appError.utils")
-const MESSAGE = require('../utils/errorMessges.utils')
+const AdminUser = require('../../models/adminUser.model')
+const { AppError,ERROR,ERRORCODE } = require("../../utils/appError.utils")
+const MESSAGE = require('../../utils/errorMessges.utils')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 exports.AddAdmin = async (req,res)=> {
