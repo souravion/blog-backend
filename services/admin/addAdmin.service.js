@@ -19,7 +19,7 @@ exports.AddAdmin = async (req,res)=> {
 exports.GetAdmin = async(req, res)=>{
   console.log( req.query)
     try{
-      let  page =3
+      let  page =1
       let  limit=10
       console.log(req.query)
       if(Object.keys(req.query).length){
