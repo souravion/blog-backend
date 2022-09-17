@@ -1,7 +1,7 @@
 
-const AdminUser = require('../models/adminUser.model')
-const { AppError,ERROR,ERRORCODE } = require("../utils/appError.utils")
-const MESSAGE = require('../utils/errorMessges.utils')
+const AdminUser = require('../../models/adminUser.model')
+const { AppError,ERROR,ERRORCODE } = require("../../utils/appError.utils")
+const MESSAGE = require('../../utils/errorMessges.utils')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 exports.AddAdmin = async (req,res)=> {
@@ -19,35 +19,41 @@ exports.AddAdmin = async (req,res)=> {
 exports.GetAdmin = async(req, res)=>{
   console.log( req.query)
     try{
-      let  page =1
+      let  page =3
       let  limit=10
-      page = parseInt(req.query.page)
-      limit = parseInt(req.query.limit)
-        const {} = req.query
+      console.log(req.query)
+      if(Object.keys(req.query).length){
+        page = parseInt(req.query.page)
+        limit = parseInt(req.query.limit)
+      }
+
+        
         const startIndex = (page - 1) * limit
-        const endIndex = page * limit
+        const totalPage = await AdminUser.countDocuments().exec()
+        // const endIndex = page * limit
   
       const results = {}
-      results.current ={
+      results.pagination ={
         page: page,
-        limit: limit
+        limit: limit,
+        totalPage:totalPage
       }
-    if (endIndex <  await AdminUser.countDocuments().exec()) {
-        results.next = {
-          page: page + 1,
-          limit: limit
-        }
+    // if (endIndex <  await AdminUser.countDocuments().exec()) {
+    //     results.next = {
+    //       page: page + 1,
+    //       limit: limit
+    //     }
        
-      }
+    //   }
       
-      if (startIndex > 0) {
+    //   if (startIndex > 0) {
     
-        results.previous = {
-          page: page - 1,
-          limit: limit
-        }
+    //     results.previous = {
+    //       page: page - 1,
+    //       limit: limit
+    //     }
        
-      }
+    //   }
       try {
         results.results = await AdminUser.aggregate([
           { 

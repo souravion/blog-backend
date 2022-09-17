@@ -1,7 +1,7 @@
-const Category = require("../models/category.model")
-const { AppError,ERROR,ERRORCODE } = require("../utils/appError.utils")
-const MESSAGE = require('../utils/errorMessges.utils')
-const AdminUser = require('../models/adminUser.model')
+const Category = require("../../models/category.model")
+const { AppError,ERROR,ERRORCODE } = require("../../utils/appError.utils")
+const MESSAGE = require('../../utils/errorMessges.utils')
+const AdminUser = require('../../models/adminUser.model')
 /**
  * 
  * @param {*} req 

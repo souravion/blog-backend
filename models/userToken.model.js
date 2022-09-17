@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 const userTokenSchema = new Schema({
 	userId: {
 		type: Schema.Types.ObjectId,
-		required: true,
+		required: [true,"User Id required"],
 	},
 	token: {
 		type: String,
-		required: true,
+		required: [true,"Token required"],
 	},
 	createdAt: {
 		type: Date,

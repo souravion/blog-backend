@@ -1,7 +1,7 @@
 
 
-const adminService = require('../../services/admin.service')
-const addAdminService = require('../../services/addAdmin.service')
+const adminService = require('../../services/admin/admin.service')
+const addAdminService = require('../../services/admin/addAdmin.service')
 const bcrypt = require('bcrypt');
 
 const  MESSAGE  = require('../../utils/errorMessges.utils');
