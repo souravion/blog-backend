@@ -39,6 +39,10 @@ const AddAdminSchema = new Schema({
         enum:"Pending" || "Active",
         default:'Pending'
     },
+    role:{
+        type:String,
+        default:"Admin"
+    },
     createdby:{
         type: Schema.Types.ObjectId,
 		required: true,
