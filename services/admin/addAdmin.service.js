@@ -29,11 +29,10 @@ exports.GetAdmin = async(req, res)=>{
 
         
         const startIndex = (page - 1) * limit
-        const totalPage = await AdminUser.countDocuments().exec()
-        // const endIndex = page * limit
-  
-      const results = {}
-      results.pagination ={
+        let totalPage = await AdminUser.countDocuments().exec()
+        totalPage = Math.ceil(totalPage/limit)
+        const results = {}
+        results.pagination ={
         page: page,
         limit: limit,
         totalPage:totalPage
