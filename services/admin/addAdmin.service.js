@@ -28,7 +28,8 @@ exports.GetAdmin = async(req, res)=>{
 
         
         const startIndex = (page - 1) * limit
-        let totalPage = await AdminUser.countDocuments().exec()
+        let documentsCount = await AdminUser.countDocuments().exec()
+        totalPage = documentsCount - 1 //// -1 we use for avoid the count of current user loggedin
         totalPage = Math.ceil(totalPage/limit)
         const results = {}
         results.pagination ={
