@@ -17,13 +17,12 @@ exports.AddAdmin = async (req,res)=> {
 }
 
 exports.GetAdmin = async(req, res)=>{
-  console.log( req.query)
     try{
       let  page =1
       let  limit=10
-      console.log(req.query)
-      if(Object.keys(req.query).length){
+      if(Object.keys(req.query.page).length){
         page = parseInt(req.query.page)
+      }else if(Object.keys(req.query.page).length){
         limit = parseInt(req.query.limit)
       }
 
