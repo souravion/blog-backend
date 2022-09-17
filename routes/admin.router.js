@@ -1,5 +1,5 @@
 const express = require('express');
-const { AddAdminController,GeAdminController } = require('../controllers/admin/addAdmin.controller');
+const { AddAdminController,GeAdminController , UpdateAdminController } = require('../controllers/admin/addAdmin.controller');
 const { CheckTokenController, AdminLoginController ,AdminLogoutController } = require('../controllers/admin/adminAuth.controller');
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
 const { AddFaqController , UpdateFaqsController, GetFaqsController, ChangeFaqStatusController ,FindFaqByIdController,RemoveFaqByIdController } = require('../controllers/admin/faq.controller');
@@ -12,6 +12,7 @@ const router = express.Router();
 
 
 router.post('/addSubadmin',checkLogin, AddAdminController);
+router.patch('/updateSubadmin/:id',checkLogin, UpdateAdminController);
 router.get('/getAdmins',checkLogin, GeAdminController);
 
 router.post('/login', AdminLoginController);
@@ -23,7 +24,7 @@ router.post('/checkToken' , checkLogin,CheckTokenController)
 router.post('/addCategory', checkLogin, CategoryController);
 router.get('/getCategory', checkLogin, GetCategoryController);
 router.patch('/status/:id', checkLogin, ChangeCategoryStatusController);
-router.patch('/update/:id', checkLogin, CategoryUpdateController);
+router.patch('/categoryUpdate/:id', checkLogin, CategoryUpdateController);
 router.get('/findCategory/:id', checkLogin, FindCtegoryByIdController);
 router.delete('/removeCategory/:id', checkLogin, RemoveCtegoryByIdController);
 /**End*/

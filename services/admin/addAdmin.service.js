@@ -94,3 +94,12 @@ exports.GetAdmin = async(req, res)=>{
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
+
+exports.UpdateAdmin = async (id, req, res) => {
+  try{
+    const updated = await AdminUser.findByIdAndUpdate(id,req)
+    return updated;
+  }catch(error){
+      throw new AppError(error.message,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+  }
+}

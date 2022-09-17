@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const  MESSAGE  = require('../../utils/errorMessges.utils');
 const { appResponse } = require('../../utils/appResponse.utils');
 const createError = require('http-errors')
-const { AddAdminschema } = require('../../validation/AddAdminSchema.validation');
+const { AddAdminschema ,EditAddAdminschema } = require('../../validation/AddAdminSchema.validation');
 const { generatePassword } = require('../../utils/passwordGenerator.utils');
 /**
  * 
@@ -69,4 +69,29 @@ exports.GeAdminController= async(req, res,next)=>{
     }catch(error){
         next(error)
     }
+}
+
+
+exports.UpdateAdminController = async (req,res,next)=>{
+   try{
+    const id = req.params.id;
+
+    const postParams = {
+        name:req.body.name,
+        email:req.body.email,
+        permission:req.body.permission,
+        desc:req.body.desc,
+        image:req.body.image
+    }
+    
+    const result = await EditAddAdminschema.validateAsync(postParams)
+    const  updatedResult = await addAdminService.UpdateAdmin(id,{...result})
+        if(updatedResult){
+            return appResponse(res, 200, MESSAGE.UPDATED)
+        }else{
+             return appResponse(res, 404, MESSAGE.NOTEXISTS)
+        }
+   }catch(error){
+        next(error)
+   } 
 }
