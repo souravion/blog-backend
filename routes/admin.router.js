@@ -12,7 +12,7 @@ const router = express.Router();
 
 
 router.post('/addSubadmin',checkLogin, AddAdminController);
-router.get('/getAdmins',GeAdminController);
+router.get('/getAdmins',checkLogin, GeAdminController);
 
 router.post('/login', AdminLoginController);
 router.delete('/logout', AdminLogoutController);
