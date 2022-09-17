@@ -9,6 +9,8 @@ const { appResponse } = require('../../utils/appResponse.utils');
 const createError = require('http-errors')
 const { AddAdminschema ,EditAddAdminschema } = require('../../validation/AddAdminSchema.validation');
 const { generatePassword } = require('../../utils/passwordGenerator.utils');
+const treebank = require('talisman/tokenizers/words/treebank')
+const doubleMetaphone = require('talisman/phonetics/double-metaphone')
 /**
  * 
  * @param {request} req 
@@ -30,12 +32,24 @@ const { generatePassword } = require('../../utils/passwordGenerator.utils');
                 }
                 
         const result = await AddAdminschema.validateAsync(postParams)
+
+        const data = treebank(result.name)
+        let searchresult = []
+        data.forEach(element => {
+        const doubleMetaphoneResult = doubleMetaphone(element)
+        doubleMetaphoneResult.forEach(doubleMetaphoneElement => {
+        if(!searchresult.includes(doubleMetaphoneElement)){
+            searchresult.push(doubleMetaphoneElement)
+        }
+    });
+ });
+
         const doesExist = await adminService.FindUser(result.email)
         if (doesExist){
            throw createError.Conflict(`${result.email} is already been registered`)
             
         }else{
-            addAdminService.AddAdmin({...postParams,createdby:res.locals.userId}).then(()=>{
+            addAdminService.AddAdmin({...postParams,createdby:res.locals.userId , searchKeyWord:searchresult}).then(()=>{
                 return appResponse(res, 200, MESSAGE.USER_CREATED)
             }).catch((error)=>{
                 next(error)

@@ -4,6 +4,7 @@ const { CheckTokenController, AdminLoginController ,AdminLogoutController } = re
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
 const { AddFaqController , UpdateFaqsController, GetFaqsController, ChangeFaqStatusController ,FindFaqByIdController,RemoveFaqByIdController } = require('../controllers/admin/faq.controller');
 const { ScrappingController } = require('../controllers/admin/scrapping.controller');
+const { SerachAlgo } = require('../controllers/admin/search.controller');
 
 const checkLogin = require('../middleware/common/checkLogin')
 const router = express.Router();
@@ -42,6 +43,8 @@ router.delete('/removeFaq/:id', checkLogin, RemoveFaqByIdController);
 router.post('/scraping', checkLogin, ScrappingController);
 // router.post('/addBlog', checkLogin, AddBlogController);
 /** End */
+
+router.post('/search', SerachAlgo);
 
 
 module.exports = router;
