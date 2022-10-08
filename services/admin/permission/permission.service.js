@@ -33,3 +33,14 @@ exports.AddPermissionLevel = async(req,res)=>{
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
+
+exports.GetPermission = async(req, res)=>{
+    try{
+        const {page= 1 , limit=10} = req.query
+        const getPermission = await PermissionLevel.find({}).limit(limit*1).skip((page-1)*limit)
+        return getPermission
+    }
+    catch(error){
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
+}
