@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema;
 
 const PermissionLevelSchema = mongoose.Schema({
     name:{
@@ -7,12 +8,10 @@ const PermissionLevelSchema = mongoose.Schema({
         trim:true,
     },
     parentId:{
-        type:Number |  Schema.Types.ObjectId,
+        type:Number | Schema.Types.ObjectId,
     },
     options:{
         type: Object,
-		// enum: ['view', 'add', 'edit','delete'],
-		// default: 'view'
     },
     date:{
         type:Date,
