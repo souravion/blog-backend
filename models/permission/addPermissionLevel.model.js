@@ -8,10 +8,12 @@ const PermissionLevelSchema = mongoose.Schema({
         trim:true,
     },
     parentId:{
-        type:Number | Schema.Types.ObjectId,
+       type: Schema.Types.Mixed,
+       required:[true,"parentId is required"],
     },
     options:{
         type: Object,
+        required:[true,"options is required"],
     },
     date:{
         type:Date,
