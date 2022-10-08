@@ -7,7 +7,7 @@ const PermissionLevelSchema = mongoose.Schema({
         trim:true,
     },
     parentId:{
-        type:Number
+        type:Number |  Schema.Types.ObjectId,
     },
     options:{
         type: Object,
