@@ -23,7 +23,6 @@ exports.FindPermissionLevelName = async(req,res)=>{
  * @returns 
  */
 exports.AddPermissionLevel = async(req,res)=>{
-    console.log(req)
     try{
 
         const addPermissionLevel = new PermissionLevel(req)

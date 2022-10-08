@@ -9,7 +9,6 @@ const { AddPermissionLevel } = require('../../../validation/permission/permissio
 
 exports.AddPermissionLevelController = async (req,res,next)=>{
     try{
-        console.log(req.body)
         const result = await AddPermissionLevel.validateAsync(req.body)
         const doExsit = await permissionService.FindPermissionLevelName(req.body.name)
         if(!doExsit){
