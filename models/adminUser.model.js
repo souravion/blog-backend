@@ -1,5 +1,6 @@
 
 
+const { required } = require('joi');
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
@@ -38,6 +39,14 @@ const AddAdminSchema = new Schema({
         type: String,
         enum:"Pending" || "Active",
         default:'Pending'
+    },
+    role:{
+        type:String,
+        default:"Admin"
+    },
+    searchKeyWord:{
+        type:Array,
+        required:[true, "Search Key word is requred"]
     },
     createdby:{
         type: Schema.Types.ObjectId,

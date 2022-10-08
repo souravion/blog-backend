@@ -27,6 +27,7 @@ const UserCreateSchema = mongooes.Schema({
         enum:"Pending" || "Active",
         default:"Pending"
     },
+    
     date:{
         type:Date,
         default:Date.now

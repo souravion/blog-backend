@@ -28,7 +28,8 @@ exports.GetAdmin = async(req, res)=>{
 
         
         const startIndex = (page - 1) * limit
-        let totalPage = await AdminUser.countDocuments().exec()
+        let documentsCount = await AdminUser.countDocuments().exec()
+        totalPage = documentsCount - 1 //// -1 we use for avoid the count of current user loggedin
         totalPage = Math.ceil(totalPage/limit)
         const results = {}
         results.pagination ={
@@ -92,4 +93,13 @@ exports.GetAdmin = async(req, res)=>{
     catch(error){
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
+}
+
+exports.UpdateAdmin = async (id, req, res) => {
+  try{
+    const updated = await AdminUser.findByIdAndUpdate(id,req)
+    return updated;
+  }catch(error){
+      throw new AppError(error.message,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+  }
 }

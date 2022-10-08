@@ -10,7 +10,10 @@ MESSAGE = {
     SERVERSIDERROR:'There was an server side error !',
     EXISTS:"already exists!",
     NOTFOUND:'Data not found!',
-    NOTEXISTS: "Does not exist!"
+    NOTEXISTS: "Does not exist!",
+    EMAILISNOTVARIFIED:"Email is not verified!",
+    PASSWORD:"Incorrect password!",
+    USERACTIVE:"You are not a active user please contact with administrator!"
 
 }
 
