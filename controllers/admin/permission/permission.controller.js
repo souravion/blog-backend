@@ -6,7 +6,7 @@ const MESSAGE = require('../../../utils/errorMessges.utils')
 const { appResponse } = require("../../../utils/appResponse.utils");
 const permissionService = require('../../../services/admin/permission/permission.service');
 const { AddPermissionLevel } = require('../../../validation/permission/permissionLevelSchema.validation');
-
+const adminService = require('../../../services/admin/admin.service')
 exports.AddPermissionLevelController = async (req,res,next)=>{
     try{
         const result = await AddPermissionLevel.validateAsync(req.body)
@@ -48,3 +48,29 @@ exports.GetPermissionController= async(req, res,next)=>{
         next(error)
     }
 }
+
+
+exports.SavePermissionController = async (req, res , next)=>{
+    try{
+        const id = req.params.id
+        // const result = await AddPermissionLevel.validateAsync(req.body)
+        const doExsit = await adminService.FindUserById(id)
+        if(doExsit){
+            permissionService.SavePermissions(id,req.body).then((result)=>{
+                return appResponse(res, 200, MESSAGE.CREATED)
+            }).catch((error)=>{
+               next(error)
+            })
+        }else{
+            return  appResponse(res, 403, MESSAGE.NOTEXISTS)
+        }
+    }catch(error){
+        if(error.isJoi===true){
+            next(error)
+        }else{
+            next(error)
+        }
+    }
+}
+
+
