@@ -26,7 +26,6 @@ const { appResponse } = require('../../utils/appResponse.utils');
 exports.AdminLoginController = async (req, res,next) => {
     try {
         const user = await adminService.AdminLogin(req.body.email)
-        console.log(user)
         if(user && Object.keys(user).length > 0){
             const isValidPassword = await bcrypt.compare(req.body.password, user.password)
             if(!isValidPassword){
@@ -83,9 +82,11 @@ exports.CheckTokenController = async(req, res, next)=>{
                     message:MESSAGE.USER_LOGGEDIN,
                     refreshToken:res.locals.refreshToken,
                     data:{
+                        
                         name:userinfo.name,
                         email:userinfo.email,
-                        image:''
+                        image:'',
+                        permissions:userinfo.permission
                     }
         })
     }
