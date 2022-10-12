@@ -82,6 +82,7 @@ exports.CheckTokenController = async(req, res, next)=>{
                     message:MESSAGE.USER_LOGGEDIN,
                     refreshToken:res.locals.refreshToken,
                     data:{
+                        
                         name:userinfo.name,
                         email:userinfo.email,
                         image:'',
