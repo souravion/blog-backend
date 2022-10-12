@@ -125,3 +125,24 @@ exports.updatePlayload = (user ,res)=>{
 
 
 
+
+exports.GetAdminInfoController = async(req, res, next)=>{
+    try{
+        const id = req.params.id
+        const adminInfoResult = await adminService.FindUserById(id)
+        if(adminInfoResult){
+            res.json({
+                status:200,
+                message:'Fetch sucessfully!',
+                data:adminInfoResult
+            })
+        }else{
+            return  appResponse(res, 403, MESSAGE.NOTFOUND)
+        }
+    }catch(error){
+        next(error)
+    }
+}
+
+
+

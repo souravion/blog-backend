@@ -1,6 +1,6 @@
 const express = require('express');
 const { AddAdminController,GeAdminController , UpdateAdminController } = require('../controllers/admin/addAdmin.controller');
-const { CheckTokenController, AdminLoginController ,AdminLogoutController } = require('../controllers/admin/adminAuth.controller');
+const { CheckTokenController, AdminLoginController ,AdminLogoutController ,GetAdminInfoController } = require('../controllers/admin/adminAuth.controller');
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
 const { AddFaqController , UpdateFaqsController, GetFaqsController, ChangeFaqStatusController ,FindFaqByIdController,RemoveFaqByIdController } = require('../controllers/admin/faq.controller');
 const { AddPermissionLevelController , GetPermissionController ,SavePermissionController } = require('../controllers/admin/permission/permission.controller');
@@ -21,6 +21,7 @@ router.post('/login', AdminLoginController);
 router.delete('/logout', AdminLogoutController);
 router.patch('/changepassword', AdminLogoutController);
 router.post('/checkToken' , checkLogin,CheckTokenController) 
+router.get('/getadminInfo/:id' , checkLogin,GetAdminInfoController) 
 
 /** Category Section */
 router.post('/addCategory', checkLogin, CategoryController);
