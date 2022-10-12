@@ -84,7 +84,8 @@ exports.CheckTokenController = async(req, res, next)=>{
                     data:{
                         name:userinfo.name,
                         email:userinfo.email,
-                        image:''
+                        image:'',
+                        permissions:userinfo.permission
                     }
         })
     }
