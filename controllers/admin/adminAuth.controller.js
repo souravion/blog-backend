@@ -26,6 +26,7 @@ const { appResponse } = require('../../utils/appResponse.utils');
 exports.AdminLoginController = async (req, res,next) => {
     try {
         const user = await adminService.AdminLogin(req.body.email)
+        console.log(user)
         if(user && Object.keys(user).length > 0){
             const isValidPassword = await bcrypt.compare(req.body.password, user.password)
             if(!isValidPassword){
@@ -43,7 +44,7 @@ exports.AdminLoginController = async (req, res,next) => {
             throw new AppError(MESSAGE.AUTHENTICATIION,ERROR.Unauthorized,ERRORCODE.AuthErrorCode)
         }
 
-    } catch (error) {
+    }catch(error) {
         next(error)
     }
 }
@@ -113,7 +114,8 @@ exports.updatePlayload = (user ,res)=>{
         data:{
             name:user.name,
             email:user.email,
-            image:''
+            image:'',
+            permissions:user.permission
         }
     })
    });
