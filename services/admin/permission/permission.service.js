@@ -60,6 +60,17 @@ exports.SavePermissions = async(id, req, res)=>{
     }
 }
 
+exports.UpdatePermissionLevel = async (id, req, res)=>{
+    try{
+        const updatedPermission=  await PermissionLevel.findByIdAndUpdate(id, req)
+        return updatedPermission
+    }catch{
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+
+    }
+}
+
+
 exports.UpdateAdmin = async (id, req, res) => {
     try{
       const updated = await AdminUser.findByIdAndUpdate(id,req)

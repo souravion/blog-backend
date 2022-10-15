@@ -13,7 +13,8 @@ MESSAGE = {
     NOTEXISTS: "Does not exist!",
     EMAILISNOTVARIFIED:"Email is not verified!",
     PASSWORD:"Incorrect password!",
-    USERACTIVE:"You are not a active user please contact with administrator!"
+    USERACTIVE:"You are not a active user please contact with administrator!",
+    ASSIGNED:"Successfully assigned"
 
 }
 
