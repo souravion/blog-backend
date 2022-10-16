@@ -5,7 +5,7 @@ const cheerio = require("cheerio");
 // const probe = require('probe-image-size');
 
 exports.ScrappingController = async (req, res, next)=>{
-    let blogDetails = []
+    let blogDetails = {}
     let images = []
     try{
         const postparam = {
@@ -48,8 +48,7 @@ exports.ScrappingController = async (req, res, next)=>{
             eachBlogContent.published_time.push(published_time, last_updated , post_published)
             eachBlogContent.twitterImage = twitterImage
             eachBlogContent.images = images
-            blogDetails.push(eachBlogContent)
-
+            blogDetails = eachBlogContent
             res.json(blogDetails)
         }
     }catch(error){

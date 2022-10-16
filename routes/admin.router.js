@@ -3,7 +3,7 @@ const { AddAdminController,GeAdminController , UpdateAdminController } = require
 const { CheckTokenController, AdminLoginController ,AdminLogoutController ,GetAdminInfoController } = require('../controllers/admin/adminAuth.controller');
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
 const { AddFaqController , UpdateFaqsController, GetFaqsController, ChangeFaqStatusController ,FindFaqByIdController,RemoveFaqByIdController } = require('../controllers/admin/faq.controller');
-const { AddPermissionLevelController , GetPermissionController ,SavePermissionController } = require('../controllers/admin/permission/permission.controller');
+const { AddPermissionLevelController , GetPermissionController ,SavePermissionController , UpdatePermissionLevelController } = require('../controllers/admin/permission/permission.controller');
 const { ScrappingController } = require('../controllers/admin/scrapping.controller');
 const { SerachAlgo } = require('../controllers/admin/search.controller');
 
@@ -42,6 +42,7 @@ router.delete('/removeFaq/:id', checkLogin, RemoveFaqByIdController);
 /**END */
 /** Permission*/
 router.post('/addPermissionLevel', checkLogin, AddPermissionLevelController);
+router.put('/updatePermissionLevel/:id', checkLogin, UpdatePermissionLevelController);
 router.get('/getPermissions', checkLogin, GetPermissionController);
 router.put('/savePermissions/:id', checkLogin, SavePermissionController);
 
