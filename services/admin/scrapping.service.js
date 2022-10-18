@@ -4,6 +4,7 @@ const MESSAGE = require('../../utils/errorMessges.utils')
 
 
 exports.addBlog = async(req, res)=>{
+    console.log(req)
     try{
         const addBlog = new Blogs(req)
         const saveBlog = await addBlog.save()
@@ -25,16 +26,6 @@ exports.FindPost = async(req,res)=>{
         const post = await Blogs.findOne({blogUrl:req})
         return post;
     }catch(error) { 
-        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
-    }
-}
-exports.AddCategory = async(req,res)=>{
-    try{
-
-        const category = new Category(req)
-        const createdCategory = await category.save()
-        return createdCategory
-    }catch(error){
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
