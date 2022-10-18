@@ -12,7 +12,7 @@ const blogs = new Schema({
         require:[true, 'description is required']
     },
     blogUrl:{
-        type : String,
+        type: String,
         required: [true, 'Blog Url is required']
     },
     imageUrl:{
@@ -31,12 +31,9 @@ const blogs = new Schema({
         type: Schema.Types.ObjectId,
         required:[true, 'Category id is required']
     },
-    postUrl:{
-        type: String,
-        required:[true, 'Post Url is requrired']
-    },
     createdBy: {
-		type:Schema.Types.ObjectId
+		type: Schema.Types.ObjectId,
+        
 	
 	},
     updatedBy: {
@@ -49,8 +46,7 @@ const blogs = new Schema({
     },
 	createdAt: {
 		type: Date,
-		default: Date.now,
-		expires: 30 * 86400, // 30 days
+		default: Date.now
 	},
 });
 
