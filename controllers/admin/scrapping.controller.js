@@ -62,9 +62,6 @@ exports.ScrappingController = async (req, res, next)=>{
 
 exports.AddBlogController = async(req , res , next)=>{
     try{
-       
-
-
         const result = await scrappingSchema.validateAsync(req.body)
         const doExsit = await scrappingService.FindPost(result.blogUrl)
         if(!doExsit){

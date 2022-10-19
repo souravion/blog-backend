@@ -31,10 +31,13 @@ const blogs = new Schema({
         type: Schema.Types.ObjectId,
         required:[true, 'Category id is required']
     },
+    searchKeyWord:{
+        type:Array,
+        required:[true, "Search Key word is requred"]
+    },
     createdBy: {
 		type: Schema.Types.ObjectId,
-        
-	
+
 	},
     updatedBy: {
 	type: Schema.Types.ObjectId
