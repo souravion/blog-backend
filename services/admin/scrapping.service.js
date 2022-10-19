@@ -7,7 +7,7 @@ const doubleMetaphone = require('talisman/phonetics/double-metaphone')
 exports.addBlog = async(req, res)=>{
     console.log(req)
     try{
-        const titleDescription = req.title + req.description
+        const titleDescription = req.title + ' '+ req.description
         const data = treebank(titleDescription)
         let result = []
         data.forEach(element => {
