@@ -42,3 +42,21 @@ exports.FindPost = async(req,res)=>{
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
+
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+ exports.GetPosts = async(req,res)=>{
+    try{
+        const posts = await Blogs.find({}).select({
+            'searchKeyWord':0
+        })
+        return posts;
+    }catch {
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+
+    }
+}

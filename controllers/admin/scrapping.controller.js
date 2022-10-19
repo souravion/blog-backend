@@ -82,3 +82,21 @@ exports.AddBlogController = async(req , res , next)=>{
         }
     }
 }
+
+exports.GetPostsController= async(req, res,next)=>{
+    try{
+        
+        const getPosts = await scrappingService.GetPosts()
+        if(getPosts.length){
+            res.json({
+                status:200,
+                message:'Fetch sucessfully!',
+                data:getPosts
+            })
+        }else {
+            return  appResponse(res, 404, MESSAGE.NOTFOUND)
+        }
+    }catch(error){
+        next(error)
+    }
+}
