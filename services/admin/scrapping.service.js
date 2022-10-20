@@ -42,3 +42,46 @@ exports.FindPost = async(req,res)=>{
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
+
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+ exports.GetPosts = async(req,res)=>{
+    let  page =1
+    let  limit=10
+    console.log(req.query.page)
+    console.log(req.query)
+    console.log(Object.keys(req.query).length)
+
+    if(Object.keys(req.query).length && Object.keys(req.query.page).length){
+      page = parseInt(req.query.page)
+    }else if(Object.keys(req.query).length && Object.keys(req.query.page).length){
+      limit = parseInt(req.query.limit)
+    }
+
+    const startIndex = (page - 1) * limit
+    let documentsCount = await Blogs.countDocuments().exec()
+    totalPage = documentsCount - 1 //// -1 we use for avoid the count of current user loggedin
+    totalPage = Math.ceil(totalPage/limit)
+    const results = {}
+    results.pagination ={
+    page: page,
+    limit: limit,
+    totalPage:totalPage
+  }
+
+
+    try{
+        results.results = await Blogs.find({}).select({
+            'searchKeyWord':0,
+            '__v':0
+        }).skip(startIndex).limit(limit).exec();
+        return results;
+    }catch {
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+
+    }
+}
