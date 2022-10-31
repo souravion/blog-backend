@@ -15,19 +15,23 @@ const blogs = new Schema({
         type: String,
         required: [true, 'Blog Url is required']
     },
-    imageUrl:{
-        type:String
+    blogBanner:{
+        type: String,
+        required: [true, 'Blog Banner Url is required']
     },
-    authorImage:{
-        type:String
+    websiteId:{
+        type: Schema.Types.ObjectId,
+        required: [true, 'Website Id is required']
     },
-    authorname:{
-        type:String
+
+    authorID:{
+        type: Schema.Types.ObjectId,
+        required: [true, 'Author Id is required']
     },
     publishedDate:{
         type: String
     },
-    category:{
+    categoryID:{
         type: Schema.Types.ObjectId,
         required:[true, 'Category id is required']
     },
@@ -40,17 +44,16 @@ const blogs = new Schema({
 
 	},
     updatedBy: {
-	type: Schema.Types.ObjectId
+	    type: Schema.Types.ObjectId
+	},
+    updatedOn: {
+	    type: Date
 	},
     status:{
         type: String,
         enum: "Active" || "Inactive",
         default:'Active'
-    },
-	createdAt: {
-		type: Date,
-		default: Date.now
-	},
+    }
 });
 
 const Blogs = mongoose.model("Blog", blogs);

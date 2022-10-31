@@ -87,7 +87,7 @@ exports.GetPostsController= async(req, res,next)=>{
     try{
         
         const getPosts = await scrappingService.GetPosts(req)
-        console.log(getPosts)
+        
         if(Object.keys(getPosts).length){
             res.json({
                 status:200,
