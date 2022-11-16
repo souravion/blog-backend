@@ -30,6 +30,6 @@ const websites = new Schema({
     }
 })
 
-const Blogs = mongoose.model("websites", blogs);
+const Websites = mongoose.model("websites", websites);
 
-module.exports =  Blogs;
+module.exports =  Websites;

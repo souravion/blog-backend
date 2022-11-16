@@ -1,13 +1,15 @@
-const mongooes = require("mongoose")
+const mongoose = require("mongoose")
 require('dotenv').config({path: '.env'});
 const url = process.env.Url;
-function databseConnection (){
-
-    mongooes.connect(url).then(()=>{
+const opts = { useNewUrlParser: true, useUnifiedTopology: true };
+databseConnection = async ()=> {
+try{
     console.log('DataBase Connected successfully')
-    }).catch((error)=>{
+    return await mongoose.connect(url)
+    
+}catch(error){
     console.log(error);
-})
+}
 }
 // const { MongoClient, ServerApiVersion } = require('mongodb');
 // const uri = "mongodb+srv://koniat:<password>@koniatdb.ynfjwur.mongodb.net/?retryWrites=true&w=majority";
