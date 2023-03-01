@@ -2,6 +2,8 @@ const Category = require("../../models/category.model")
 const { AppError,ERROR,ERRORCODE } = require("../../utils/appError.utils")
 const MESSAGE = require('../../utils/errorMessges.utils')
 const AdminUser = require('../../models/adminUser.model')
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema;
 /**
  * 
  * @param {*} req 
@@ -25,9 +27,18 @@ exports.AddCategory = async(req,res)=>{
  * @param {*} res 
  */
 exports.GetCategories = async(req, res)=>{
+    console.log(req.query)
+    var conditions = {}
     try{
-        const {page= 1 , limit=10} = req.query
+        const {page= 1 , limit=10 , categoryId} = req.query
+        if (categoryId) {
+              conditions = {
+                _id: mongoose.Types.ObjectId(categoryId)
+            }
+          }
+          console.log("conditions", conditions)
         const getCategories = await Category.aggregate([
+            { $match : conditions} ,
                 {
                     $lookup:
                     {
@@ -41,21 +52,18 @@ exports.GetCategories = async(req, res)=>{
                     $unwind:"$created"
                 },
                 {
-    
                     $project:
                     {
-                        // "_id":0,
+                        
                         "__v":0,
                         "createdby":0,
-                        // "createdAt":1,
+                       
                         "created._id":0,
                         "created.password":0,
                         "created.email":0,
                         "created.is_active":0,
                         "created.date":0,
                         "created.__v":0,
-                        // "created.createdAt":1,
-    
                     },
                 },
           
