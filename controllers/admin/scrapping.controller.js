@@ -62,24 +62,29 @@ exports.ScrappingController = async (req, res, next)=>{
 
 exports.AddBlogController = async(req , res , next)=>{
     try{
-        const result = await scrappingSchema.validateAsync(req.body)
-        const doExsit = await scrappingService.FindPost(result.blogUrl)
-        if(!doExsit){
-            scrappingService.addBlog({...result, createdby:res.locals.userId}).then((result)=>{
-                return appResponse(res, 200, MESSAGE.CREATED)
-            }).catch((error)=>{
-               next(error)
-            })
-        }else{
-            const errorMessage  =`${ result.blogUrl} ${MESSAGE.EXISTS}`
-            return  appResponse(res, 403, errorMessage)
-        }
+        const result = await scrappingSchema.validateAsync(req.body.author)
+        
+        scrappingService.addBlog({...result, createdby:res.locals.userId}).then((result)=>{
+            return appResponse(res, 200, MESSAGE.CREATED)
+        }).catch((error)=>{
+           next(error)
+        })
+
+        // const doExsit = await scrappingService.FindPost(result.blogUrl)
+        // if(!doExsit){
+
+        // }else{
+        //     const errorMessage  =`${ result.blogUrl} ${MESSAGE.EXISTS}`
+        //     return  appResponse(res, 403, errorMessage)
+        // }
     }catch(error){
-        if(error.isJoi===true){
-            next(error)
-        }else{
-            next(error)
-        }
+        next(error)
+
+        // if(error.isJoi===true){
+        //     next(error)
+        // }else{
+        //     next(error)
+        // }
     }
 }
 
@@ -87,7 +92,7 @@ exports.GetPostsController= async(req, res,next)=>{
     try{
         
         const getPosts = await scrappingService.GetPosts(req)
-        console.log(getPosts)
+        
         if(Object.keys(getPosts).length){
             res.json({
                 status:200,
