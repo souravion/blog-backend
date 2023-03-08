@@ -30,7 +30,8 @@ const contentSchema = new Schema({
 	},
     country: {
 		type: Number,
-		required: true,
+		// required: true,
+		
 	},
 
 	createdAt: {
@@ -40,6 +41,6 @@ const contentSchema = new Schema({
 	},
 });
 
-const content = mongoose.model("contents", contentSchema);
+const Content = mongoose.model("content", contentSchema);
 
-module.exports =  content;
+module.exports =  Content;

@@ -1,14 +1,13 @@
-
-
-
-
-
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const authorSchema = new Schema({
 	name: {
-		type: Schema.Types.ObjectId,
+		type: String,
+		required: true,
+	},
+	image: {
+		type: String,
 		required: true,
 	},
 	createdAt: {
@@ -18,6 +17,6 @@ const authorSchema = new Schema({
 	},
 });
 
-const author = mongoose.model("authors", authorSchema);
+const Author = mongoose.model("author", authorSchema);
 
-module.exports =  author;
+module.exports =  Author;

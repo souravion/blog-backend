@@ -1,30 +1,60 @@
 const Blogs = require('../../models/scrapping.model')
 const { AppError,ERROR,ERRORCODE } = require("../../utils/appError.utils")
 const MESSAGE = require('../../utils/errorMessges.utils')
-const treebank = require('talisman/tokenizers/words/treebank')
-const doubleMetaphone = require('talisman/phonetics/double-metaphone')
+
+const mongoose = require('mongoose')
+const Author = require('../../models/scrapping.author.model')
+const Content = require('../../models/scrapping.contents.model')
+const { generateSerachKeyWord } = require('../../utils/searchKeywordAlgo.utils')
 
 exports.addBlog = async(req, res)=>{
-    console.log(req)
-    try{
-        const titleDescription = req.title + ' '+ req.description
-        const data = treebank(titleDescription)
-        let result = []
-        data.forEach(element => {
-            const doubleMetaphoneResult = doubleMetaphone(element)
-            doubleMetaphoneResult.forEach(doubleMetaphoneElement => {
-                if(!result.includes(doubleMetaphoneElement)){
-                    result.push(doubleMetaphoneElement)
-                }
-            });
-        });
+   
+    try {
+        console.log("result",req.name)
+        // const session = await mongoose.startSession();
+        // session.startTransaction();
+        const searchKeyWord = generateSerachKeyWord(req.name)
+        console.log(searchKeyWord)
+
         const response = {...req,searchKeyWord:result}
         const addBlog = new Blogs(response)
         const saveBlog = await addBlog.save()
-        return saveBlog
-    }catch{
+
+        const addAuthor = await Author.insertMany(req.author, {session: session});
+        console.log(addAuthor)
+        const contentData = {...req.content,author_id:addAuthor[0]._id}
+        console.log(contentData)
+        await Content.insertMany(contentData,  {session: session} )
+        await session.commitTransaction();
+        session.endSession();
+        //return res.send({ status: 'User deleted', ...deletedUser, appDeletedCount: app.deletedCount });
+    } catch (err) {
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
+
+
+
+
+
+    // try{
+    //     const titleDescription = req.title + ' '+ req.description
+    //     const data = treebank(titleDescription)
+    //     let result = []
+    //     data.forEach(element => {
+    //         const doubleMetaphoneResult = doubleMetaphone(element)
+    //         doubleMetaphoneResult.forEach(doubleMetaphoneElement => {
+    //             if(!result.includes(doubleMetaphoneElement)){
+    //                 result.push(doubleMetaphoneElement)
+    //             }
+    //         });
+    //     });
+    //     const response = {...req,searchKeyWord:result}
+    //     const addBlog = new Blogs(response)
+    //     const saveBlog = await addBlog.save()
+    //     return saveBlog
+    // }catch{
+    //     throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    // }
 }
 
 
@@ -52,13 +82,10 @@ exports.FindPost = async(req,res)=>{
  exports.GetPosts = async(req,res)=>{
     let  page =1
     let  limit=10
-    console.log(req.query.page)
-    console.log(req.query)
-    console.log(Object.keys(req.query).length)
-
-    if(Object.keys(req.query).length && Object.keys(req.query.page).length){
+    const id = req.query.category
+    if(Object.keys(req.query).length && req.query.hasOwnProperty('page')){
       page = parseInt(req.query.page)
-    }else if(Object.keys(req.query).length && Object.keys(req.query.page).length){
+    }else if(Object.keys(req.query).length && req.query.hasOwnProperty('limit')){
       limit = parseInt(req.query.limit)
     }
 
@@ -75,12 +102,18 @@ exports.FindPost = async(req,res)=>{
 
 
     try{
-        results.results = await Blogs.find({}).select({
+        const query = {
+            ...(req.query.hasOwnProperty('category') && {category:req.query.category}) 
+        }
+        
+        console.log(query)
+        results.results = await Blogs.findOne(query).select({
             'searchKeyWord':0,
             '__v':0
         }).skip(startIndex).limit(limit).exec();
         return results;
     }catch {
+       
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
 
     }
