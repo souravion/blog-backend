@@ -12,13 +12,13 @@ const userRoute = require('./routes/user.router');
 const swaggerJSDocs = YAML.load("./api.yaml");
 const cors = require('cors')
 app.use(cookieParser(process.env.COOKIE_SECRET))
-var options = {
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
-}
-app.use(cors(options));
+// var options = {
+//   "origin": "*",
+//   "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   "preflightContinue": false,
+//   "optionsSuccessStatus": 204
+// }
+app.use(cors());
 
 // app.use(cors(
 //   {
