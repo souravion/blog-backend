@@ -12,13 +12,21 @@ const userRoute = require('./routes/user.router');
 const swaggerJSDocs = YAML.load("./api.yaml");
 const cors = require('cors')
 app.use(cookieParser(process.env.COOKIE_SECRET))
-app.use(cors(
-  {
-    origin: true, 
-    credentials: true, 
-    methods: 'POST,GET,PUT,OPTIONS,DELETE'
-  }
-));
+var options = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
+app.use(cors(options));
+
+// app.use(cors(
+//   {
+//     origin: true, 
+//     credentials: true, 
+//     // methods: 'POST,GET,PUT,OPTIONS,DELETE'
+//   }
+// ));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSDocs));
 db.databseConnection()
 // app.use(express.static('public'))
