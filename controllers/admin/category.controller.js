@@ -71,7 +71,7 @@ exports.ChangeCategoryStatusController = async(req, res, next)=>{
         }else{
             return  appResponse(res, 403, MESSAGE.NOTEXISTS)
         }
-    }catch{
+    }catch(error){
         next(error)
     }
 }
