@@ -26,7 +26,7 @@ router.get('/getadminInfo/:id' , checkLogin,GetAdminInfoController)
 /** Category Section */
 router.post('/addCategory', checkLogin, CategoryController);
 router.get('/getCategory', checkLogin, GetCategoryController);
-router.post('/status/:id', checkLogin, ChangeCategoryStatusController);
+router.patch('/status/:id', checkLogin, ChangeCategoryStatusController);
 router.patch('/categoryUpdate/:id', checkLogin, CategoryUpdateController);
 router.get('/findCategory/:id', checkLogin, FindCtegoryByIdController);
 router.delete('/removeCategory/:id', checkLogin, RemoveCtegoryByIdController);
