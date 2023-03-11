@@ -24,7 +24,7 @@ app.use(cors(
   {
     origin: true, 
     credentials: true, 
-    // methods: 'POST,GET,PUT,OPTIONS,DELETE'
+    methods: 'POST,GET,PUT,OPTIONS,DELETE,PATCH'
   }
 ));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSDocs));
