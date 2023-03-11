@@ -92,8 +92,6 @@ exports.FindCategory = async(req,res)=>{
 
 
 exports.ChangeStatus = async(id,req,res)=>{
-    console.log(id)
-    console.log(req)
     try{
         const ChangedStatus = await Category.findByIdAndUpdate(id,req);
         return ChangedStatus
