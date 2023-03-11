@@ -18,15 +18,15 @@ app.use(cookieParser(process.env.COOKIE_SECRET))
 //   "preflightContinue": false,
 //   "optionsSuccessStatus": 204
 // }
-app.use(cors());
+// app.use(cors());
 
-// app.use(cors(
-//   {
-//     origin: true, 
-//     credentials: true, 
-//     // methods: 'POST,GET,PUT,OPTIONS,DELETE'
-//   }
-// ));
+app.use(cors(
+  {
+    origin: true, 
+    credentials: true, 
+    // methods: 'POST,GET,PUT,OPTIONS,DELETE'
+  }
+));
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJSDocs));
 db.databseConnection()
 // app.use(express.static('public'))
