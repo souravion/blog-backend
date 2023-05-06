@@ -72,3 +72,13 @@ exports.FindAdminUser = async(req,res)=>{
     }
 }
 
+
+exports.ChangeStatus = async(id,req,res)=>{
+    try{
+        const ChangedStatus = await AdminUser.findByIdAndUpdate(id,req);
+        return ChangedStatus
+    }
+    catch(error){
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
+}
