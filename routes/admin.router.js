@@ -35,7 +35,7 @@ router.delete('/removeCategory/:id', checkLogin, RemoveCtegoryByIdController);
 /**FAQ */
 router.post('/addFaq', checkLogin, AddFaqController);
 router.get('/getFaqs', checkLogin, GetFaqsController);
-router.patch('/updateFaq/:id', checkLogin, UpdateFaqsController);
+router.post('/updateFaq/:id', checkLogin, UpdateFaqsController);
 router.patch('/faqstatus/:id', checkLogin, ChangeFaqStatusController);
 router.get('/findFaq/:id', checkLogin, FindFaqByIdController);
 router.delete('/removeFaq/:id', checkLogin, RemoveFaqByIdController);
