@@ -42,7 +42,7 @@ exports.UpdateFaqsController = async(req, res , next)=>{
             if(result){
                 return appResponse(res, 200, MESSAGE.UPDATED)
             }else{
-                return appResponse(res, 404, MESSAGE.NOTEXISTS)
+                return appResponse(res, 204, MESSAGE.NOTEXISTS)
             }
         }).catch((error)=>{
             next(error)
@@ -62,7 +62,7 @@ exports.GetFaqsController = async(req, res, next)=>{
                 data:faqs
             })
         }else{
-            return  appResponse(res, 404, MESSAGE.NOTFOUND)
+            return  appResponse(res, 204, MESSAGE.NOTFOUND)
         }
     }catch(error){
         next(error)
@@ -81,7 +81,7 @@ exports.ChangeFaqStatusController = async (req, res , next)=>{
                 if(result){
                     return appResponse(res, 200, MESSAGE.UPDATED)
                 }else{
-                    return appResponse(res, 404, MESSAGE.NOTEXISTS)
+                    return appResponse(res, 204, MESSAGE.NOTEXISTS)
                 }
             }).catch((error)=>{
                 next(error)
