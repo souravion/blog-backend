@@ -1,6 +1,6 @@
 const express = require('express');
 const { AddAdminController,GeAdminController , UpdateAdminController } = require('../controllers/admin/addAdmin.controller');
-const { CheckTokenController, AdminLoginController ,AdminLogoutController ,GetAdminInfoController, ChangeAdminStatusController } = require('../controllers/admin/adminAuth.controller');
+const { CheckTokenController, AdminLoginController ,AdminLogoutController ,GetAdminInfoController, ChangeAdminStatusController, RemoveAdminController } = require('../controllers/admin/adminAuth.controller');
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
 const { AddFaqController , UpdateFaqsController, GetFaqsController, ChangeFaqStatusController ,FindFaqByIdController,RemoveFaqByIdController } = require('../controllers/admin/faq.controller');
 const { AddPermissionLevelController , GetPermissionController ,SavePermissionController , UpdatePermissionLevelController } = require('../controllers/admin/permission/permission.controller');
@@ -23,6 +23,7 @@ router.post('/changepassword', AdminLogoutController);
 router.post('/checkToken' , checkLogin,CheckTokenController) 
 router.get('/getadminInfo/:id' , checkLogin,GetAdminInfoController) 
 router.post('/statusUpdate/:id' , checkLogin,ChangeAdminStatusController) 
+router.delete('/removeAdmin/:id' , checkLogin,RemoveAdminController) 
 
 /** Category Section */
 router.post('/addCategory', checkLogin, CategoryController);

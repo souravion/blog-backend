@@ -163,3 +163,22 @@ exports.ChangeAdminStatusController = async(req, res, next)=>{
 }
 
 
+exports.RemoveAdminController = async (req, res, next)=>{
+    try{
+        const id = req.params.id
+        adminService.RemoveAdminById(id).then((result)=>{
+            if(result){
+                return appResponse(res, 200, MESSAGE.DELETED)
+            }else{
+                return appResponse(res, 200, MESSAGE.NOTEXISTS)
+            }
+        }).catch((error)=>{
+            next(error)
+        })
+        
+    }catch(error){
+       next(error)
+    }
+}
+
+
