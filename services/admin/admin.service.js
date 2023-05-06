@@ -82,3 +82,13 @@ exports.ChangeStatus = async(id,req,res)=>{
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 }
+
+exports.RemoveAdminById = async(req, res)=>{
+    try{
+        const removeAdmin = await AdminUser.findByIdAndDelete({_id:req})
+        return removeAdmin
+    }catch{
+        throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
+    }
+
+}
