@@ -145,4 +145,21 @@ exports.GetAdminInfoController = async(req, res, next)=>{
 }
 
 
+exports.ChangeAdminStatusController = async(req, res, next)=>{
+    try{
+        const id = req.params.id
+        postparams = {
+            status:req.body.status 
+        }
+        const statusChanged = await adminService.ChangeStatus(id, postparams)
+        if(statusChanged){
+            return  appResponse(res, 200, MESSAGE.UPDATED)
+        }else{
+            return  appResponse(res, 403, MESSAGE.NOTEXISTS)
+        }
+    }catch(error){
+        next(error)
+    }
+}
+
 
