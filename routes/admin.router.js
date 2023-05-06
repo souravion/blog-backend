@@ -14,20 +14,20 @@ const router = express.Router();
 
 
 router.post('/addSubadmin',checkLogin, AddAdminController);
-router.patch('/updateSubadmin/:id',checkLogin, UpdateAdminController);
+router.post('/updateSubadmin/:id',checkLogin, UpdateAdminController);
 router.get('/getAdmins',checkLogin, GeAdminController);
 
 router.post('/login', AdminLoginController);
 router.delete('/logout', AdminLogoutController);
-router.patch('/changepassword', AdminLogoutController);
+router.post('/changepassword', AdminLogoutController);
 router.post('/checkToken' , checkLogin,CheckTokenController) 
 router.get('/getadminInfo/:id' , checkLogin,GetAdminInfoController) 
 
 /** Category Section */
 router.post('/addCategory', checkLogin, CategoryController);
 router.get('/getCategory', checkLogin, GetCategoryController);
-router.patch('/status/:id', checkLogin, ChangeCategoryStatusController);
-router.patch('/categoryUpdate/:id', checkLogin, CategoryUpdateController);
+router.post('/status/:id', checkLogin, ChangeCategoryStatusController);
+router.post('/categoryUpdate/:id', checkLogin, CategoryUpdateController);
 router.get('/findCategory/:id', checkLogin, FindCtegoryByIdController);
 router.delete('/removeCategory/:id', checkLogin, RemoveCtegoryByIdController);
 /**End*/
@@ -36,7 +36,7 @@ router.delete('/removeCategory/:id', checkLogin, RemoveCtegoryByIdController);
 router.post('/addFaq', checkLogin, AddFaqController);
 router.get('/getFaqs', checkLogin, GetFaqsController);
 router.post('/updateFaq/:id', checkLogin, UpdateFaqsController);
-router.patch('/faqstatus/:id', checkLogin, ChangeFaqStatusController);
+router.post('/faqstatus/:id', checkLogin, ChangeFaqStatusController);
 router.get('/findFaq/:id', checkLogin, FindFaqByIdController);
 router.delete('/removeFaq/:id', checkLogin, RemoveFaqByIdController);
 /**END */
