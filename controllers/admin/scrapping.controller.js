@@ -1,10 +1,12 @@
 const { urlSchema } = require("../../validation/url.validation")
 const { appResponse } = require("../../utils/appResponse.utils");
-
+const MESSAGE = require('../../utils/errorMessges.utils')
 const axios = require("axios");
 const cheerio = require("cheerio");
 const scrappingService = require('../../services/admin/scrapping.service');
-const { scrappingSchema } = require("../../validation/scrapping.valdiation");
+const { scrappingContentSchema, scrappingAuthorSchema } = require("../../validation/scrapping.valdiation");
+const { checkBlogUrl } = require("../../utils/urls.utils");
+const { dateFormatter } = require("../../utils/dateFormater.utils");
 
 // const probe = require('probe-image-size');
 
@@ -61,14 +63,41 @@ exports.ScrappingController = async (req, res, next)=>{
 }
 
 exports.AddBlogController = async(req , res , next)=>{
+    const {content , author } = req.body
     try{
-        const result = await scrappingSchema.validateAsync(req.body.author)
-        
-        scrappingService.addBlog({...result, createdby:res.locals.userId}).then((result)=>{
-            return appResponse(res, 200, MESSAGE.CREATED)
-        }).catch((error)=>{
-           next(error)
-        })
+        const isValidUrl = checkBlogUrl(req.body.content.blogUrl)
+        const formatDate = dateFormatter(content.publishedDate)
+        if(isValidUrl){
+            let contentParams = {
+                title:content.title,
+                description:content.description,
+                blogUrl:content.blogUrl,
+                blogBanner:content.blogBanner,
+                publishedDate:formatDate,
+                categoryID:content.categoryID
+            }
+          
+            const contentResult = await scrappingContentSchema.validateAsync(contentParams)
+
+            const authorResult = await scrappingAuthorSchema.validateAsync(author)
+
+            scrappingService.addBlogData({contentResult,authorResult, createdby:res.locals.userId}).then((result)=>{
+                return appResponse(res, 200, MESSAGE.CREATED)
+            }).catch((error)=>{
+               next(error)
+            })
+            
+        }else{
+            return appResponse(res, 404, MESSAGE.INVALIDBLOGURL)
+        }
+       
+        // const result = req.body
+
+        // scrappingService.addBlogData({...result, createdby:res.locals.userId}).then((result)=>{
+        //     return appResponse(res, 200, MESSAGE.CREATED)
+        // }).catch((error)=>{
+        //    next(error)
+        // })
 
         // const doExsit = await scrappingService.FindPost(result.blogUrl)
         // if(!doExsit){
@@ -79,12 +108,6 @@ exports.AddBlogController = async(req , res , next)=>{
         // }
     }catch(error){
         next(error)
-
-        // if(error.isJoi===true){
-        //     next(error)
-        // }else{
-        //     next(error)
-        // }
     }
 }
 

@@ -20,7 +20,8 @@ ERROR = {
 
 ERRORCODE = {
     AuthErrorCode:"auth/invalid-credential",
-    InternalServerError:'auth/internal-error'
+    InternalServerError:'auth/internal-error',
+    InvalidCategory:"category/invalid-category-data"
 }
 
 module.exports = {

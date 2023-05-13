@@ -53,7 +53,7 @@ router.put('/savePermissions/:id', checkLogin, SavePermissionController);
 /** */
 /*********************** */
 router.post('/scraping', checkLogin, ScrappingController);
-router.post('/addPost',  AddBlogController);
+router.post('/addPost',  checkLogin, AddBlogController);
 router.get('/getPosts', checkLogin, GetPostsController);
 /** End */
 

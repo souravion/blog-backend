@@ -14,7 +14,9 @@ MESSAGE = {
     EMAILISNOTVARIFIED:"Email is not verified!",
     PASSWORD:"Incorrect password!",
     USERACTIVE:"You are not a active user please contact with administrator!",
-    ASSIGNED:"Successfully assigned"
+    ASSIGNED:"Successfully assigned",
+    INVALIDCATEGORY:"Invalid Category",
+    INVALIDBLOGURL:"Currently we are not accepting this url for some reason"
 
 }
 

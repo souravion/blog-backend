@@ -1,38 +1,42 @@
-const Blogs = require('../../models/scrapping.model')
+
 const { AppError,ERROR,ERRORCODE } = require("../../utils/appError.utils")
 const MESSAGE = require('../../utils/errorMessges.utils')
-
-const mongoose = require('mongoose')
-const Author = require('../../models/scrapping.author.model')
-const Content = require('../../models/scrapping.contents.model')
 const { generateSerachKeyWord } = require('../../utils/searchKeywordAlgo.utils')
+const mongoose = require('mongoose')
 
-exports.addBlog = async(req, res)=>{
-   
+/**
+ * Below are all necessary modules we are used for store blogs details
+ */
+// const Author = require('../../models/blog/authors.model')
+const Blogs = require('../../models/blog/blog.model')
+const Websites = require('../../models/blog/website.model')
+const Category = require('../../models/masters/category.model')
+const Authors = require("../../models/blog/authors.model")
+const Schema = mongoose.Schema;
+
+/**
+ * ********************************************************************
+ */
+
+exports.addBlogData = async(req, res)=>{
+    
+    const {contentResult , authorResult } = req;
+    console.log(contentResult.categoryID)
+    console.log(authorResult)
+    // const searchData = generateSerachKeyWord(contentResult.title + contentResult.description)
     try {
-        console.log("result",req.name)
-        // const session = await mongoose.startSession();
-        // session.startTransaction();
-        const searchKeyWord = generateSerachKeyWord(req.name)
-        console.log(searchKeyWord)
+            const category = await Category.findById({_id:contentResult.categoryID})
+            console.log("category", category)
 
-        const response = {...req,searchKeyWord:result}
-        const addBlog = new Blogs(response)
-        const saveBlog = await addBlog.save()
-
-        const addAuthor = await Author.insertMany(req.author, {session: session});
-        console.log(addAuthor)
-        const contentData = {...req.content,author_id:addAuthor[0]._id}
-        console.log(contentData)
-        await Content.insertMany(contentData,  {session: session} )
-        await session.commitTransaction();
-        session.endSession();
-        //return res.send({ status: 'User deleted', ...deletedUser, appDeletedCount: app.deletedCount });
-    } catch (err) {
+        
+       
+    }catch (err) {
+        console.log(err)
+        console.log('else')
         throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     }
 
-
+}
 
 
 
@@ -55,7 +59,7 @@ exports.addBlog = async(req, res)=>{
     // }catch{
     //     throw new AppError(MESSAGE.SERVERSIDERROR,ERROR.InternalServerError,ERRORCODE.InternalServerError)
     // }
-}
+
 
 
 /**
@@ -105,8 +109,6 @@ exports.FindPost = async(req,res)=>{
         const query = {
             ...(req.query.hasOwnProperty('category') && {category:req.query.category}) 
         }
-        
-        console.log(query)
         results.results = await Blogs.findOne(query).select({
             'searchKeyWord':0,
             '__v':0

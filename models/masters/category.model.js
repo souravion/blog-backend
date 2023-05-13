@@ -2,7 +2,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 const STATUS = ["active", "inactive"];
-const AdminUsers = require('./adminUser.model')
+const AdminUsers = require('../adminUser.model')
 const AddCategorySchema = new Schema({
 
 	name: {
