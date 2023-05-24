@@ -22,6 +22,7 @@ exports.CategoryController = async (req,res,next)=>{
 
         const result = await AddCategoryschema.validateAsync(postParams)
         const doExsit = await categoryService.FindCategory(result.name)
+        
         if(!doExsit){
             categoryService.AddCategory({...result, createdby:res.locals.userId, slug:slug}).then((result)=>{
                 return appResponse(res, 200, MESSAGE.CREATED)
