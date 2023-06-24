@@ -22,10 +22,10 @@ exports.ScrapingController = async (req, res, next) => {
       if (validationResult) {
         const { data } = await axios.get(validationResult.url, { xmlMode: true })
         const $ = cheerio.load(data)
-        const jsonRaw = $("script[type='application/ld+json']")[0].children[0].data; 
-        const result = JSON.parse(jsonRaw);
-        console.log(result.image[0]);
-        console.log(result.author.name);
+        // const jsonRaw = $("script[type='application/ld+json']")[0].children[0].data; 
+        // const result = JSON.parse(jsonRaw);
+        // console.log(result.image[0]);
+        // console.log(result.author.name);
         // Extract blog details from HTML using Cheerio
         const title = $("head title").text()
         const ogTitle = $('meta[property="og:title"]').attr('content')

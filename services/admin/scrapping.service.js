@@ -3,7 +3,8 @@ const { AppError, ERROR, ERRORCODE } = require("../../utils/appError.utils")
 const MESSAGE = require('../../utils/errorMessges.utils')
 const { generateSerachKeyWord } = require('../../utils/searchKeywordAlgo.utils')
 const mongoose = require('mongoose')
-
+const treebank = require('talisman/tokenizers/words/treebank')
+const doubleMetaphone = require('talisman/phonetics/double-metaphone')
 /**
  * Below are all necessary modules we are used for store blogs details
  */
@@ -18,28 +19,95 @@ const Schema = mongoose.Schema;
  * ********************************************************************
  */
 
+/*1. check if this blog url is already exists
+2. if exists then step 9. if not exists then
+3. check if this is a valid category
+4. if valid category
+5. Check if base url of this website is stored
+6. check if this website is accessible for scraping
+7. if website is accessible then 
+8. store the data
+9. Update the content*/
+
 exports.addBlogData = async (req, res) => {
 
-    const { contentResult, authorResult } = req;
-    // const searchData = generateSerachKeyWord(contentResult.title + contentResult.description)
+    const { contentResult, authorResult, createdby } = req;
+    const searchBlogContent = generateSerachKeyWord(contentResult.title + contentResult.description)
     try {
-        let baseUrl = new URL (contentResult.blogUrl)
+        let blogIdUrlId
         let websiteId
-        const category = await Category.findOne({ _id: contentResult.categoryID })
-        console.log(category)
-        if (category) {
-            let baseUrl = new URL (contentResult.blogUrl)
-            const websitesData = await Websites.findOne({ baseUrl: baseUrl })
-            if(!websiteUrl){
-                websiteId = websitesData._id
+        let categoryID
+        let authorId
+
+        const blog = await Blogs.findOne({ blogUrl: contentResult.blogUrl })
+        console.log(blog)
+        if(blog != null){
+            blogIdUrlId = blog._id
+            updateParams ={
+                title:contentResult.title,
+                description:contentResult.description,
+                blogBanner:contentResult.blogBanner,
+                searchKeyWord:searchBlogContent
             }
-        } else {
-            // create
+            return await Blogs.findByIdAndUpdate(blogIdUrlId, updateParams) 
+        }else{
+            const category = await Category.findOne({ _id: contentResult.categoryID })
+            categoryID = category._id;
+            if(category){
+                let baseUrl = new URL (contentResult.blogUrl)
+                const websitesData = await Websites.findOne({ baseUrl: baseUrl.origin })
+                if(websitesData){
+                    websiteId = websitesData._id;
+                }else{
+                    let websiteParas = {
+                        baseUrl:baseUrl.origin,
+                        name:baseUrl.hostname
+
+                    }
+                    const website = new Websites(websiteParas)
+                    const websiteCreated = await website.save()
+                    websiteId = websiteCreated._id;
+                }
+                
+                const authorData = await Authors.findOne({ websiteId: websiteId, name: authorResult.name})
+                if(authorData){
+                    authorId = authorData._id
+                }else{
+                    const searchData = generateSerachKeyWord(authorResult.name)
+
+                    const authorParams = {
+                        name:authorResult.name,
+                        image:authorResult.image,
+                        websiteId:websiteId,
+                        searchKeyWords:searchData
+                    }
+                    const authors = new Authors(authorParams)
+                    const authorParamsCreated = await authors.save()
+                    authorId = authorParamsCreated._id;
+                }
+
+               const contentparams={
+                title:contentResult.title,
+                description:contentResult.description,
+                blogUrl:contentResult.blogUrl,
+                blogBanner:contentResult.blogBanner,
+                websiteId:websiteId,
+                authorID:authorId,
+                publishedDate:contentResult.publishedDate,
+                categoryID:categoryID,
+                searchKeyWord:searchBlogContent,
+                createdBy:createdby
+               } 
+               console.log(contentparams)
+               const contentCreat = new Blogs(contentparams)
+               const contentCreated = await contentCreat.save()
+               return contentCreated
+            }
         }
 
+
+
     } catch (err) {
-        // console.log(err)
-        // console.log('else')
         throw new AppError(MESSAGE.SERVERSIDERROR, ERROR.InternalServerError, ERRORCODE.InternalServerError)
     }
 
