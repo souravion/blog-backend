@@ -97,8 +97,7 @@ exports.addBlogData = async (req, res) => {
                 categoryID:categoryID,
                 searchKeyWord:searchBlogContent,
                 createdBy:createdby
-               } 
-               console.log(contentparams)
+               }
                const contentCreat = new Blogs(contentparams)
                const contentCreated = await contentCreat.save()
                return contentCreated
