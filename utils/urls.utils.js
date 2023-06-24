@@ -20,7 +20,8 @@ let urls = [
     "solutions", 
     "style", 
     "science", 
-    "cooking"
+    "cooking",
+    "pub"
 ]
 
 function checkBlogUrl(url){
