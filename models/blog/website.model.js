@@ -1,32 +1,30 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-
-const authors = new Schema({
+const websites = new Schema({
     name:{
         type: String,
-        required: [true, 'Author name is required']
+         required: [true, 'Website name is required']
     },
-    image:{
+    baseUrl: {
         type: String,
+        required: [true, 'Base url is required']
     },
-    webisteId: {
-        type: Schema.Types.ObjectId
-    },
-    totalFollowers: {
-        type : Number,
+    totalBlogs : {
+        type: Number,
         default : 0
     },
-    searchKeyWord:{
+    searchKeyWords:{
         type:Array,
         required:[true, "Search Key word is requred"]
     },
-    status:{
+    status: {
         type: String,
         enum: "Active" || "Inactive",
         default:'Active'
     }
 })
 
-const Authors = mongoose.model("Author", authors);
-module.exports =  Authors;
+const Websites = mongoose.model("websites", websites);
+
+module.exports =  Websites;

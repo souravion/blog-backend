@@ -13,7 +13,6 @@ function generateSerachKeyWord(keyWord){
         });
        
     });
-    console.log(result)
     return result;
 };
 module.exports={

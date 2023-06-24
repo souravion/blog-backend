@@ -4,7 +4,7 @@ const { CheckTokenController, AdminLoginController ,AdminLogoutController ,GetAd
 const { RemoveCtegoryByIdController, FindCtegoryByIdController, CategoryController , GetCategoryController , ChangeCategoryStatusController, CategoryUpdateController } = require('../controllers/admin/category.controller');
 const { AddFaqController , UpdateFaqsController, GetFaqsController, ChangeFaqStatusController ,FindFaqByIdController,RemoveFaqByIdController } = require('../controllers/admin/faq.controller');
 const { AddPermissionLevelController , GetPermissionController ,SavePermissionController , UpdatePermissionLevelController } = require('../controllers/admin/permission/permission.controller');
-const { ScrappingController , AddBlogController, GetPostsController } = require('../controllers/admin/scrapping.controller');
+const { ScrapingController , AddBlogController, GetPostsController } = require('../controllers/admin/scrapping.controller');
 const { SerachAlgo } = require('../controllers/admin/search.controller');
 
 const checkLogin = require('../middleware/common/checkLogin')
@@ -52,8 +52,8 @@ router.put('/savePermissions/:id', checkLogin, SavePermissionController);
 
 /** */
 /*********************** */
-router.post('/scraping', checkLogin, ScrappingController);
-router.post('/addPost',  AddBlogController);
+router.post('/scraping', checkLogin, ScrapingController);
+router.post('/addPost',  checkLogin, AddBlogController);
 router.get('/getPosts', checkLogin, GetPostsController);
 /** End */
 

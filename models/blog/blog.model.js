@@ -26,7 +26,7 @@ const blogs = new Schema({
 
     authorID:{
         type: Schema.Types.ObjectId,
-        required: [true, 'Author Id is required']
+        // required: [true, 'Author Id is required']
     },
     publishedDate:{
         type: String
